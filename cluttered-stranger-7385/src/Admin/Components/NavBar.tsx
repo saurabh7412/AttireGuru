@@ -7,8 +7,11 @@ import setting from "../Images/Icons/setting.png";
 import logout from "../Images/Icons/logout.png";
 import DropdownMenu from "./DropdownMenu";
 import pro from "../Images/profile pic.jpg";
+import {Link} from "react-router-dom";
 
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import AllProducts from "../Pages/AllProducts";
+import DashBoard from "../Pages/DashBoard"
 
 const NavBar = () => {
   const [isAuth, setIsAuth] = useState(false);
@@ -21,7 +24,7 @@ const NavBar = () => {
     <DIV>
       <div id="nav-1">
         <div id="nav-1-1">
-          <img src={logo} id="logo" />
+          <Link to={"/Dashboard"} id="logo"><img src={logo}  /></Link>
           <input placeholder="Search here" />
         </div>
 
@@ -62,39 +65,16 @@ const NavBar = () => {
       </div>
 
       <div id="nav-2">
-        <a>Dashboard</a>
-        {/* <a>All Products</a> */}
+        
+        <Link to={'/Dashboard'}>Dashboard</Link>
+        
+        <Link to={'/Users'}>Users</Link>
+        <Link to={'/Orders'}>Orders</Link>
 
-        {/* <div className="dropdown" style={{ float: "right" }}>
-                  <button className="dropbtn">
-                    <img src={pro} style={{width:"22%",borderRadius:"50%"}}/> Username
-                  </button>
-                  <div className="dropdown-content">
-                    <a href="#"><img src={setting} />Setting</a>
-                    <a href="#"  onClick={()=>console.log("hi")}><img src={logout}/>Log Out</a>
-                  </div>
-                </div> */}
-
-        <Tabs variant="enclosed">
-          <TabList>
-            <Tab>One</Tab>
-            <Tab>Two</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <p>one!</p>
-            </TabPanel>
-            <TabPanel>
-              <p>two!</p>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-
-        <a></a>
-        <a>abc</a>
-        <a>abc</a>
-        <a>abc</a>
+       
       </div>
+
+      
     </DIV>
   );
 };
@@ -104,6 +84,9 @@ export default NavBar;
 const DIV = styled.div`
   background-color: #5c6bc0;
   padding: 2px;
+
+
+  
 
   #nav-2 {
     background-color: white;
