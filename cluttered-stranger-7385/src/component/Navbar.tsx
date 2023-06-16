@@ -64,7 +64,7 @@ import { useDispatch } from "react-redux";
                 <div className="blackDot"></div>
 				<Link to="/women" >WOMEN</Link>
                 <div className="blackDot"></div>
-				<Link to="/shop" >SHOP</Link>
+				<Link to="/product" >SHOP</Link>
 				
                 
 				<button

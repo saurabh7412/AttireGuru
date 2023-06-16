@@ -3,7 +3,7 @@ import Tshirt from "../Images/Tshirt.png";
 import jacket from "../Images/jacket.jpg"
 import styled from "styled-components";
 import { StarIcon } from "@chakra-ui/icons";
-import { HomeProduct } from "../Components/HomeProducts";
+import { HomeProduct } from "../component/HomeProducts";
 import { BsGlobe } from "react-icons/bs";
 import { BiPlanet } from "react-icons/bi";
 import { Icon } from "@chakra-ui/react";
