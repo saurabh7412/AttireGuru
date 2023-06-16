@@ -6,6 +6,12 @@ import { type } from "os"
 
 import ProductReducer from "../Redux/ProductReducer/Reducer";
 
+export type initialType={
+  isAuth:boolean;
+  name:string;
+}
+
+
  export interface  Iproduct {
    id: string;
   title: string;
