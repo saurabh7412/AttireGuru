@@ -14,6 +14,7 @@ import Login from './Login';
 import Users from './Users';
 import Orders from './Orders';
 import EditProduct from '../Components/EditProduct';
+import AddProduct from './AddProduct';
 
 const AllRoutes = () => {
   return (
@@ -32,6 +33,8 @@ const AllRoutes = () => {
             <Route path='/Jeans' element={<Jeans/>}/>
             <Route path='/Shoes' element={<Shoes/>}/>
             <Route path='/Sandals' element={<Sandals/>}/>
+            <Route path='/AddProduct' element={<AddProduct/>}/>
+
 
 
         </Routes>

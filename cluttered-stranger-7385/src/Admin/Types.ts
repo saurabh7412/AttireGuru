@@ -23,10 +23,20 @@ export interface AllProduct {
 }
 
 
-export interface ProductAction {
+export interface SearchAction {
     type: string;
-    payload: Product[];
+    payload: string;
+}
+
+export interface AuthAction {
+    type: string;
 }
 
 
-export type DispatchType = (arg: ProductAction) => ProductAction
+
+
+export type DispatchType = (arg: SearchAction) => SearchAction
+
+export interface SearchType{
+    search: string
+}
