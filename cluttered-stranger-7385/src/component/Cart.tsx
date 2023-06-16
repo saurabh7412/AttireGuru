@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
+import { Iproduct } from '../Constraints/Type';
 
 const CartItemContainer = styled.div`
   position: relative;
@@ -91,14 +92,14 @@ const BlurBackground = styled.div<{ showButtons: boolean }>`
     `}
 `;
 
-interface CartItemProps {
-  image: string;
-  title: string;
-  price: string;
-  offer: string;
-}
+// interface CartItemProps {
+//   image: string;
+//   title: string;
+//   price: string;
+//   offer: string;
+// }
 
-export default function Cart ({ image, title, price, offer }:CartItemProps) {
+export default function Cart ({ image, title, price, offer }:Iproduct) {
   const [showButtons, setShowButtons] = useState(false);
 
   return (
