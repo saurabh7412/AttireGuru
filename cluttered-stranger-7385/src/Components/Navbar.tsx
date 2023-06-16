@@ -55,9 +55,9 @@ import { useDispatch } from "react-redux";
 			<Link to="/"> <img className="logo" alt="logo" src={logo_final} /> </Link>
 
 
-			<div className= {navClass ? "responsive_nav secNav" : "secNav"} >
+			<div className= {"secNav"} >
 			{/* ref={navRef} */}
-			<nav  >
+			<nav className= {navClass ? "responsive_nav" : "false"} >
 				<Link  to="/about" >ABOUT</Link>
                 <div className="blackDot"></div>
 				<Link  to="/men" className="about section" >MEN</Link>

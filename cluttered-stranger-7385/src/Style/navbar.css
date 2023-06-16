@@ -8,7 +8,8 @@
     /* outline: black; */
 }
 
-
+ /* background-color: #5c6bc0; */
+ /* background-color: #283593;  button */
 
 header {
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -17,8 +18,8 @@ header {
 	justify-content: space-between;
 	height: 70px;
 	padding: 0 2rem;
-	background-color: #f2f2f2;
-	color: black;
+	background-color: #5c6bc0;
+	color: white;
 	position:fixed;
 	z-index: 100;
 	width: 100%;
@@ -26,12 +27,16 @@ header {
 
 nav a {
 	margin: 0 1rem;
-	color: black;
+	color: white;
 	text-decoration: none;
 }
 
 nav a:hover {
-	color: grey
+	color: black;
+	scale: 1.1;
+	transition: 500ms;
+	text-decoration: solid underline   #283593;
+
 }
 
 header .nav-btn {
@@ -76,7 +81,7 @@ nav{
     font-size: 20px;
 }
 .logo{
-	height: 50px;
+	height: 40px;
 	border-radius: 10px;
 	/* border: 1px solid blue; */
 	/* padding: -5px; */
@@ -98,8 +103,9 @@ nav{
 
 @media only screen and (max-width: 1024px) {
 	.logo{
-		height: 30px;
+		height: 20px;
 	}
+	
 	header .nav-btn {
 		visibility: visible;
 		opacity: 1;
