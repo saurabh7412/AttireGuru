@@ -119,10 +119,11 @@ export default function Cart(props: Iproduct) {
   
     const handleAddToCart = () => {
       const cartItem = props;
-      const cartItems = JSON.parse(localStorage.getItem('AddedToCart') || '[]');
-      cartItems.push(cartItem);
-      localStorage.setItem('AddedToCart', JSON.stringify(cartItems));
-      alert('Item added to cart');
+      // cartItem.quantity=1;
+         const cartItems = JSON.parse(localStorage.getItem('AddedToCart') || '[]');
+         cartItems.push({...cartItem,quantity:1});
+         localStorage.setItem('AddedToCart', JSON.stringify(cartItems));
+         alert(`${cartItems.length+1} Item added to cart`);
     };
     
    

@@ -3,9 +3,12 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { Iproduct } from '../Constraints/Type';
+import { Iproduct } from '../constrains/type';
 import { getProducts } from '../Redux/ProductReducer/action';
 import { Dispatch } from 'redux';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 interface IParams {
   id: string;
@@ -25,6 +28,7 @@ const ProductContainer = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
+    
   }
 `;
 
@@ -36,14 +40,20 @@ const ProductImage = styled.img`
   @media (max-width: 768px) {
     width: 100%;
     height: auto;
+    margin-left:125px;
   }
 `;
 
 const ProductInfo = styled.div`
   flex-grow: 1;
-
+  width:650px;
   margin-left:100px;
   padding: 10px 20px;
+  @media (max-width: 768px) {
+    
+    
+    margin-left:50px;
+  }
 `;
 
 const ProductName = styled.h2`
@@ -84,7 +94,7 @@ const SizeButton = styled.button`
 
 const AddToCartButton = styled.button`
   
-  width:150%;
+  width:100%;
   padding: 10px 20px;
   font-size: 16px;
   color: #fff;
@@ -93,10 +103,7 @@ const AddToCartButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
 
-  &:hover {
-    background-color: #283593;
-    border:1px;
-  }
+ 
 `;
 
 const DiscountLabel = styled.span`
@@ -104,6 +111,7 @@ const DiscountLabel = styled.span`
   background-color: #ffff00;
   padding: 4px 8px;
   border-radius: 4px;
+  margin-bottom:30px;
 `;
 const ProductRating = styled.div`
    display: flex;
@@ -116,11 +124,13 @@ export default function SingleProduct() {
   const {id}=param;
   console.log(id)
   const products = useSelector((store: any) => store.product);
-//   const dispatch: Dispatch<any> = useDispatch();
+  const dispatch: Dispatch<any> = useDispatch();
 
-//   useEffect(() => {
-//     dispatch(getProducts({params:{}}));
-//   }, []);
+  useEffect(() => {
+    if (!product) {
+    dispatch(getProducts({params:{id}}));
+  }
+  }, []);
 
   const product = products.find((item: Iproduct) => item.id === id);
 
@@ -130,10 +140,12 @@ export default function SingleProduct() {
 
   const handleAddToCart = () => {
    const cartItem = product;
+   cartItem.quantity=1;
       const cartItems = JSON.parse(localStorage.getItem('AddedToCart') || '[]');
-      cartItems.push(cartItem);
+      cartItems.push({...cartItem,quantity:1});
       localStorage.setItem('AddedToCart', JSON.stringify(cartItems));
-      alert(`${cartItems.length+1} Item added to cart`);
+      // alert(`${cartItems.length+1} Item added to cart`);
+      toast.success(`${cartItems.length} Item added to cart`);
     console.log(`Added ${product.title} to cart`);
   };
   
@@ -183,6 +195,8 @@ const RatingStars = ( {rating }:{rating:number}) => {
           <label htmlFor="">rating:-</label>
          <RatingStars rating={product.rating}/>
          <label htmlFor="">Select Size:-</label> {renderSizeButtons()}
+
+         <ToastContainer />
           <AddToCartButton onClick={handleAddToCart}>
             Add to Cart
           </AddToCartButton>
