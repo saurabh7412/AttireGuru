@@ -1,8 +1,16 @@
+import { type } from "os"
 
 
 //   Use this to define Types of all variables and functions
 
+
 import ProductReducer from "../Redux/ProductReducer/Reducer";
+
+export type initialType={
+  isAuth:boolean;
+  name:string;
+}
+
 
  export interface  Iproduct {
    id: string;
