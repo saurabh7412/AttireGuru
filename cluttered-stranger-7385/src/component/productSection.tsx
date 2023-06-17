@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { getProducts } from '../Redux/ProductReducer/action';
-import { Iproduct, MyObject, RootState } from '../Constraints/Type';
+import { Iproduct, MyObject, RootState } from '../constrains/type';
 import Cart from './Cart';
 import Pagination from './Pegination';
 import { Skeleton } from '@chakra-ui/react';
@@ -42,6 +42,7 @@ const SearchBar = styled.div`
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    color:white;
   }
 `;
 
