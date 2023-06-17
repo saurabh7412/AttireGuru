@@ -1,133 +1,211 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import styled from "styled-components";
 
-type Filters = {
-  gender: string[];
-  category: string[];
-  color: string[];
-};
+interface SidebarProps {}
 
 const SidebarContainer = styled.div`
-  width: 300px;
-  padding: 20px;
+  width: 200px;
+  padding: 16px;
   background-color: #f2f2f2;
 `;
 
-const FilterSection = styled.section`
-  margin-bottom: 20px;
+const Title = styled.h3`
+  font-size: 18px;
+  margin-bottom: 16px;
 `;
 
-const SectionTitle = styled.h3`
-  margin-bottom: 10px;
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  curser:pointer;
+  label {
+    margin-left: 8px;
+  }
 `;
-
-const FilterOption = styled.div`
-  margin-bottom: 5px;
+const ClearAll = styled.span`
+  color: red;
+  cursor: pointer;
 `;
+const Sidebar: React.FC<SidebarProps> = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialCat = searchParams.getAll("category");
+  const initialGen = searchParams.getAll("gender");
+  const [initialOrder] = searchParams.getAll("order");
+  const initialColor=searchParams.getAll("color")
+  const [category, setCategory] = useState<string[]>(initialCat || []);
+  const [gender, setGender] = useState<string[]>(initialGen || []);
+  const [order, setOrder] = useState<string>(initialOrder || "");
+  const [selectedColors, setSelectedColors] = useState<string[]>(initialColor || []);
+  const colors = ["Maroon", "Black", "Olive", "Multi","Peach","Yellow","Pink","Green","Nevy","White","Blue","Cream","Brown",];
+  useEffect(() => {
+    const params: Partial<{ category: string[]; gender: string[]; order: string ;color: string[]}> = { category, gender ,color: selectedColors};
+    order && (params.order = order);
+    setSearchParams(params);
+  }, [category, gender, order, setSearchParams,selectedColors]);
 
-const FilterCheckbox = styled.input`
-  margin-right: 5px;
-`;
+  const handleGender = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    let newGender = [...gender];
+    if (newGender.includes(value)) {
+      newGender = newGender.filter((el) => el !== value);
+    } else {
+      newGender.push(value);
+    }
+    setGender(newGender);
+  };
 
-const SortingSection = styled.section`
-  margin-bottom: 20px;
-`;
+  const handleCategory = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    let newCat = [...category];
+    if (newCat.includes(value)) {
+      newCat = newCat.filter((el) => el !== value);
+    } else {
+      newCat.push(value);
+    }
+    setCategory(newCat);
+  };
 
-const SortingOption = styled.option``;
-
-type SidebarProps = {
-  selectedFilters: Filters;
-  updateFilters: (filters: Filters) => void;
-};
-
-const Sidebar = () => {
-  
-
+  const handleColor = (e: React.ChangeEvent<HTMLInputElement>) => {
+   const { value } = e.target;
+   let newColors = [...selectedColors];
+   if (newColors.includes(value)) {
+     newColors = newColors.filter((color) => color !== value);
+   } else {
+     newColors.push(value);
+   }
+   setSelectedColors(newColors);
+ };
+ const handleClearAll = () => {
+   setCategory([]);
+   setGender([]);
+   setOrder("");
+   setSelectedColors([]);
+ }
   return (
     <SidebarContainer>
-      <FilterSection>
-        <SectionTitle>Gender</SectionTitle>
-        <FilterOption>
-          <FilterCheckbox
+      <ClearAll onClick={handleClearAll}>Clear All</ClearAll>
+      <Title>Filter By Gender</Title>
+      <CheckboxContainer>
+        <input
+          type="checkbox"
+          id="genderCheckboxMale"
+          value="male"
+          onChange={handleGender}
+          checked={gender.includes("male")}
+        />
+        <label htmlFor="genderCheckboxMale">Men</label>
+      </CheckboxContainer>
+      <CheckboxContainer>
+        <input
+          type="checkbox"
+          id="genderCheckboxFemale"
+          value="female"
+          onChange={handleGender}
+          checked={gender.includes("female")}
+        />
+        <label htmlFor="genderCheckboxFemale">Women</label>
+      </CheckboxContainer>
+      
+      <Title>Filter By Color</Title>
+      {colors.map((color) => (
+        <CheckboxContainer key={color}>
+          <input
             type="checkbox"
-            // checked={selectedFilters.gender.includes('Men')}
-            // onChange={(e) => handleFilterChange('gender', 'Men', e.target.checked)}
+            id={`colorCheckbox_${color}`}
+            value={color}
+            checked={selectedColors.includes(color)}
+            onChange={handleColor}
           />
-          Men
-        </FilterOption>
-        <FilterOption>
-          <FilterCheckbox
-            type="checkbox"
-            // checked={selectedFilters.gender.includes('Women')}
-            // onChange={(e) => handleFilterChange('gender', 'Women', e.target.checked)}
-          />
-          Women
-        </FilterOption>
-      </FilterSection>
+          <label htmlFor={`colorCheckbox_${color}`}>{color}</label>
+        </CheckboxContainer>
+      ))}
+      <Title>Filter By Category</Title>
+      <CheckboxContainer>
+        <input
+          type="checkbox"
+          id="categoryCheckbox1"
+          value="shirt"
+          onChange={handleCategory}
+          checked={category.includes("shirt")}
+        />
+        <label htmlFor="categoryCheckbox1">shirts</label>
+      </CheckboxContainer>
+      <CheckboxContainer>
+        <input
+          type="checkbox"
+          id="categoryCheckbox1"
+          value="kurtas"
+          onChange={handleCategory}
+          checked={category.includes("kurtas")}
+        />
+        <label htmlFor="categoryCheckbox1">kurtas</label>
+      </CheckboxContainer>
+      <CheckboxContainer>
+        <input
+          type="checkbox"
+          id="categoryCheckbox1"
+          value="dress-material"
+          onChange={handleCategory}
+          checked={category.includes("dress-material")}
+        />
+        <label htmlFor="categoryCheckbox1">dress-material</label>
+      </CheckboxContainer>
+      <CheckboxContainer>
+        <input
+          type="checkbox"
+          id="categoryCheckbox1"
+          value="sarees"
+          onChange={handleCategory}
+          checked={category.includes("sarees")}
+        />
+        <label htmlFor="categoryCheckbox1">sarees</label>
+      </CheckboxContainer>
+      <CheckboxContainer>
+        <input
+          type="checkbox"
+          id="categoryCheckbox1"
+          value="jeans"
+          onChange={handleCategory}
+          checked={category.includes("jeans")}
+        />
+        <label htmlFor="categoryCheckbox1">jeans</label>
+      </CheckboxContainer>
+      <CheckboxContainer>
+        <input
+          type="checkbox"
+          id="categoryCheckbox1"
+          value="shoes"
+          onChange={handleCategory}
+          checked={category.includes("shoes")}
+        />
+        <label htmlFor="categoryCheckbox1">shoes</label>
+      </CheckboxContainer>
+      
+      {/* Other category checkboxes go here */}
 
-      <FilterSection>
-        <SectionTitle>Category</SectionTitle>
-        <FilterOption>
-          <FilterCheckbox
-            type="checkbox"
-            // checked={selectedFilters.category.includes('Clothing')}
-            // onChange={(e) => handleFilterChange('category', 'Clothing', e.target.checked)}
-          />
-          Clothing
-        </FilterOption>
-        <FilterOption>
-          <FilterCheckbox
-            type="checkbox"
-            // checked={selectedFilters.category.includes('Shoes')}
-            // onChange={(e) => handleFilterChange('category', 'Shoes', e.target.checked)}
-          />
-          Shoes
-        </FilterOption>
-        <FilterOption>
-          <FilterCheckbox
-            type="checkbox"
-            // checked={selectedFilters.category.includes('Accessories')}
-            // onChange={(e) => handleFilterChange('category', 'Accessories', e.target.checked)}
-          />
-          Accessories
-        </FilterOption>
-      </FilterSection>
-
-      <FilterSection>
-        <SectionTitle>Color</SectionTitle>
-        <FilterOption>
-           <FilterCheckbox
-            type="checkbox"
-            // checked={selectedFilters.color.includes('Red')}
-            // onChange={(e) => handleFilterChange('color', 'Red', e.target.checked)} */}
-          />
-          Red
-        </FilterOption>
-        <FilterOption>
-          <FilterCheckbox
-            type="checkbox"
-            // checked={selectedFilters.color.includes('Blue')}
-            // onChange={(e) => handleFilterChange('color', 'Blue', e.target.checked)}
-          />
-          Blue
-        </FilterOption>
-        <FilterOption>
-          <FilterCheckbox
-            type="checkbox"
-            // checked={selectedFilters.color.includes('Green')}
-            // onChange={(e) => handleFilterChange('color', 'Green', e.target.checked)}
-          />
-          Green
-        </FilterOption>
-      </FilterSection>
-
-      <SortingSection>
-        <SectionTitle>Sort By</SectionTitle>
-        <select>
-          <SortingOption>Price: Low to High</SortingOption>
-          <SortingOption>Price: High to Low</SortingOption>
-        </select>
-      </SortingSection>
+      <Title>Sort By</Title>
+      <CheckboxContainer>
+        <input
+          type="checkbox"
+          id="sortingCheckboxAscending"
+          value="asc"
+          onChange={(e) => setOrder(e.target.value)}
+          checked={order === "asc"}
+        />
+        <label htmlFor="sortingCheckboxAscending">Ascending</label>
+      </CheckboxContainer>
+      <CheckboxContainer>
+        <input
+          type="checkbox"
+          id="sortingCheckboxDescending"
+          value="desc"
+          onChange={(e) => setOrder(e.target.value)}
+          checked={order === "desc"}
+        />
+        <label htmlFor="sortingCheckboxDescending">Descending</label>
+      </CheckboxContainer>
     </SidebarContainer>
   );
 };
