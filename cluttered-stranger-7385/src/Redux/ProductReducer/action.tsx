@@ -1,10 +1,11 @@
 
 
 import axios from "axios";
-import { PRODUCTS_FAILURE, PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS,POST_PRODUCTS_SUCCESS, DELETE_PRODUCT_SUCCESS, EDIT_PRODUCT_SUCCESS  } from "../actiontype";
+import { PRODUCTS_FAILURE, PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS,POST_PRODUCTS_SUCCESS,   } from "../actiontype";
 import { MyObject, productAction } from "../../Constraints/Type";
 
 import { Dispatch } from 'redux';
+
 // Define action interfaces
 interface ProductsRequestAction {
    type: typeof PRODUCTS_REQUEST;
@@ -32,7 +33,7 @@ interface ProductsRequestAction {
         dispatch<ProductsRequestAction>({ type: PRODUCTS_REQUEST });
     
         try {
-          const response = await axios.get('http://localhost:8080/products',obj);
+          const response = await axios.get('https://cluttered-stranger-backend.onrender.com/products',obj);
           const totalPages = Math.ceil(response.headers['x-total-count'] / 16);
     console.log(response.data,totalPages)
           dispatch<GetProductsSuccessAction>({

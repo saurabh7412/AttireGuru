@@ -42,13 +42,16 @@ export type initialType={
 
  export type DispatchType=(args:productAction)=>productAction
  export type RootState = ReturnType<typeof ProductReducer>;
+ 
  export interface MyObject {
   params: {
     category?: string[];
     gender?: string[];
+    color?:string[];
     _limit?: number;
     _page?: number;
-    _sort?: "price";
-    _order?: string | null;
+    _sort?: "price" | "";
+    _order?: any ;
+    q?:string;
   };
 }

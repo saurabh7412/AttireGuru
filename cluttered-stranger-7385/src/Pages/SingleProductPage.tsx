@@ -1,121 +1,208 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
 
-const ProductPageContainer = styled.div`
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { Iproduct } from '../constrains/type';
+import { getProducts } from '../Redux/ProductReducer/action';
+import { Dispatch } from 'redux';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
+interface IParams {
+  id: string;
+}
+
+const Container = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
   padding: 20px;
 `;
 
+const ProductContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  max-width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    
+  }
+`;
+
 const ProductImage = styled.img`
-  width: 300px;
-  height: auto;
-  margin-bottom: 20px;
+  width: 600px;
+  height: 100vh;
+  object-fit: cover;
 
   @media (max-width: 768px) {
     width: 100%;
+    height: auto;
+    margin-left:125px;
   }
 `;
 
-const ProductTitle = styled.h2`
-  font-size: 24px;
-  margin-bottom: 10px;
+const ProductInfo = styled.div`
+  flex-grow: 1;
+  width:650px;
+  margin-left:100px;
+  padding: 10px 20px;
+  @media (max-width: 768px) {
+    
+    
+    margin-left:50px;
+  }
 `;
 
-const ProductDescription = styled.p`
-  margin-bottom: 10px;
+const ProductName = styled.h2`
+  margin-top: 100px;
+
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
 `;
 
 const ProductPrice = styled.p`
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #777;
 `;
 
-const ProductRating = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-`;
-
-const RatingStars = styled.div`
-  color: gold;
-`;
-
-const SizeDropdown = styled.select`
-  padding: 8px 12px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
+const ProductDescription = styled.p`
   font-size: 16px;
-  cursor: pointer;
+  margin-bottom: 30px;
+  color: #555;
 `;
 
-const AddToCartButton = styled.button`
-  background-color: #007bff;
-  color: #fff;
+const SizeButton = styled.button`
   padding: 10px 20px;
+  margin: 20px 5px 50px 5px;
+  
+  font-size: 10px;
+  color: black;
+  background-color: lightblue;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 20px;
   cursor: pointer;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #283593;
   }
 `;
 
-const SingleProductPage = () => {
-  const product = {
-    id: "1",
-    title: "IVOC",
-    description: "Slim Fit Shirt with Patch Pocket",
-    price: 671,
-    color: "Black",
-    gender: "male",
-    category: "shirt",
-    image: "https://assets.ajio.com/medias/sys_master/root/20220819/Qm9w/62fe856aaeb269176183efe0/ivoc_black_slim_fit_shirt_with_patch_pocket.jpg",
-    rating: 4.5,
-    sizes: ["S", "M", "L", "XL"],
-    brand: "IVOC",
-    fabric: "Cotton",
-    sleeve: "Full Sleeve",
-    pattern: "Solid",
-  };
+const AddToCartButton = styled.button`
+  
+  width:100%;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #283593;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+ 
+`;
 
-  const handleSizeChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedSize(event.target.value);
-  };
+const DiscountLabel = styled.span`
+  color: black;
+  background-color: #ffff00;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom:30px;
+`;
+const ProductRating = styled.div`
+   display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top:20px;
+ `;
+export default function SingleProduct() {
+  const param = useParams<any>();
+  const {id}=param;
+  console.log(id)
+  const products = useSelector((store: any) => store.product);
+  const dispatch: Dispatch<any> = useDispatch();
+
+  useEffect(() => {
+    if (!product) {
+    dispatch(getProducts({params:{id}}));
+  }
+  }, []);
+
+  const product = products.find((item: Iproduct) => item.id === id);
+
+  if (!product) {
+    return <div>Product not found</div>;
+  }
 
   const handleAddToCart = () => {
-    // Add to cart functionality
-    console.log("Product added to cart!");
+   const cartItem = product;
+   cartItem.quantity=1;
+      const cartItems = JSON.parse(localStorage.getItem('AddedToCart') || '[]');
+      cartItems.push({...cartItem,quantity:1});
+      localStorage.setItem('AddedToCart', JSON.stringify(cartItems));
+      // alert(`${cartItems.length+1} Item added to cart`);
+      toast.success(`${cartItems.length} Item added to cart`);
+    console.log(`Added ${product.title} to cart`);
+  };
+  
+const RatingStars = ( {rating }:{rating:number}) => {
+   const renderStars = () => {
+     const starCount = Math.floor(rating);
+     const stars = [];
+ 
+     for (let i = 0; i < starCount; i++) {
+       stars.push(<span key={i}>⭐</span>);
+     }
+ 
+     return stars;
+   };
+ 
+   return <ProductRating >{renderStars()}</ProductRating>;
+ };
+ 
+  const renderSizeButtons = () => {
+    if (!product.sizes || product.sizes.length === 0) {
+      return null;
+    }
+
+    return (
+      <div>
+        {product.sizes.map((size:any) => (
+          <SizeButton key={size}>{size}</SizeButton>
+        ))}
+      </div>
+    );
   };
 
   return (
-    <ProductPageContainer>
-      <ProductImage src={product.image} alt={product.title} />
-      <ProductTitle>{product.title}</ProductTitle>
-      <ProductDescription>{product.description}</ProductDescription>
-      <ProductPrice>Price: ${product.price}</ProductPrice>
-      <ProductRating>
-        Rating: 
-        <RatingStars>{Array(Math.floor(product.rating)).fill("★")}</RatingStars>
-      </ProductRating>
-      <SizeDropdown value={selectedSize} onChange={handleSizeChange}>
-        {product.sizes.map((size) => (
-          <option key={size} value={size}>{size}</option>
-        ))}
-      </SizeDropdown>
-      <p>Brand: {product.brand}</p>
-      <p>Fabric: {product.fabric}</p>
-      <p>Sleeve: {product.sleeve}</p>
-      <p>Pattern: {product.pattern}</p>
-      <AddToCartButton onClick={handleAddToCart}>Add to Cart</AddToCartButton>
-    </ProductPageContainer>
-  );
-};
+    <Container>
+      <ProductContainer>
+        <ProductImage src={product.image} alt={product.title} />
+        <ProductInfo>
+          <ProductName>{product.title}</ProductName>
+          <ProductPrice>
+            Price: ${product.price}{' '}
+            <span style={{ textDecoration: 'line-through' }}>
+              ${product.mrp}
+            </span>
+          </ProductPrice>
+          <DiscountLabel>{"40% offer"}</DiscountLabel>
+          <ProductDescription>{product.description}</ProductDescription>
+          <label htmlFor="">rating:-</label>
+         <RatingStars rating={product.rating}/>
+         <label htmlFor="">Select Size:-</label> {renderSizeButtons()}
 
-export default SingleProductPage;
+         <ToastContainer />
+          <AddToCartButton onClick={handleAddToCart}>
+            Add to Cart
+          </AddToCartButton>
+         
+        </ProductInfo>
+      </ProductContainer>
+    </Container>
+  );
+}
