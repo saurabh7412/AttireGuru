@@ -26,19 +26,41 @@ import {
     
     const [email,setEmail] = useState<string>("")
     const [password,setPassword] = useState<string>("")
-
-    const [fistName,setFirstName] = useState<string>("")
+    const [firstName,setFirstName] = useState<string>("")
     const [lastName,setLastName] = useState<string>("")
 
+    type userType = {
+      email: string;
+      password: string;
+      id: number;
+      username: string
+    }
+    
     const navigate = useNavigate();
-    const handleSubmit = () => {
-    //    e.preventDefault();
-    //    console.log(state);
-    //    axios.post(`https://json-example.onrender.com/user`, state);
-    console.log(email,password);
-    //    toast.success("Your Account is Created");
-    };
+    const handleSubmit = (e:any) => {
+       e.preventDefault();
  
+    console.log(email,password);
+      
+      if(firstName === "" || lastName === "" || email === "" || password === ""){
+         toast.warn("Please full All The Details !")
+      }
+      else{
+         const obj : userType = {
+            id: Math.random(),
+            username: firstName+lastName,
+            email: email,
+            password: password
+         }
+         // https://cluttered-stranger-backend.onrender.com/users
+         // https://json-example.onrender.com/user
+
+         axios.post(`https://cluttered-stranger-backend.onrender.com/users`,obj).then((res)=> console.log(res)).catch((error)=> console.log(error))
+         toast.success("Sign Up Successfully")
+      }
+        
+    };
+
     return (
        <Flex
           padding={"50px 10px"}
@@ -66,6 +88,7 @@ import {
                 boxShadow={"lg"}
                 p={8}
              >
+               <ToastContainer/>
                 <Stack
                    spacing={4}
                    box-shadow={
@@ -79,10 +102,8 @@ import {
                             <Input
                                type="text"
                                placeholder="Enter FirstName"
-                               value={fistName}
-                               onChange={(e) =>
-                                  setFirstName(e.target.value)
-                               }
+                               value={firstName}
+                               onChange={(e)=> setFirstName(e.target.value)}
                             />
                          </FormControl>
                       </Box>
@@ -90,12 +111,11 @@ import {
                          <FormControl id="lastName">
                             <FormLabel>Last Name</FormLabel>
                             <Input
+                            value={lastName}
+                            onChange={(e)=> setLastName(e.target.value)}
                                type="text"
-                               value={lastName}
                                placeholder="Enter LastName"
-                               onChange={(e) =>
-                                  setLastName(e.target.value)
-                               }
+                               
                             />
                          </FormControl>
                       </Box>

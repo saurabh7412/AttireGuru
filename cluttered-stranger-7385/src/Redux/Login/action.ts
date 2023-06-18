@@ -5,9 +5,9 @@ type initialType={
   name:string;
 }
 
-export const LoginSuccess=(payload:initialType)=>{
+export const LoginSuccess=()=>{
  
-  return {type:LOGIN_SUCCESS,payload}
+  return {type:LOGIN_SUCCESS}
 }
 export const LoginFailure=(payload:initialType)=>{
   return {type:LOGIN_FAILURE,payload}
