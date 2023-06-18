@@ -4,21 +4,22 @@ import { Iproduct } from '../Constraints/Type';
 
 const CartContainer = styled.div`
   display: flex;
-  width:100%;
+  width:70%;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
-`;
-
+  margin:auto;
+  `;
+  
 const CartItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width:100%;
-  padding: 10px;
+  padding: 20px;
   margin-bottom: 10px;
-  
+  border-radius:20px;
   background-color: #f5f5f5;
+  margin-top: 30px;
 `;
 const EmptyCartImage = styled.img`
   margin-top: 20px;
@@ -26,14 +27,19 @@ const EmptyCartImage = styled.img`
 `;
 const CartImage = styled.img`
   width: 200px;
+  border-radius:20px;
   height: auto;
   object-fit: cover;
   margin-right: 10px;
 `;
 
 const CartInfo = styled.div`
-  flex-grow: 1;
+  
   margin-left: 100px;
+  h1{
+    font-weight:bold;
+    font-size:25px;
+  }
 
 `;
 
@@ -79,6 +85,7 @@ const RemoveButton = styled.button`
 const BuyNowButton = styled.button`
 width:100%;
   margin-top: 20px;
+  margin-bottom: 40px;
   padding: 10px 20px;
   background-color: #283593;
   color: white;
@@ -91,7 +98,10 @@ const CartHeading = styled.h2`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+  margin-top: 100px;
 `;
+
+
 const AddtocartPage = () => {
   const storedCartItems = localStorage.getItem('AddedToCart');
   const [cartItems, setCartItems] = useState<Iproduct[]>(storedCartItems ? JSON.parse(storedCartItems) : []);
