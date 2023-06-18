@@ -1,18 +1,32 @@
+import {
+	Menu,
+	MenuButton,
+	MenuList,
+	MenuItem,
+	MenuItemOption,
+	MenuGroup,
+	MenuOptionGroup,
+	MenuDivider,
+	Button
+  } from '@chakra-ui/react'
+import {ChevronDownIcon} from "@chakra-ui/icons"
 import { useEffect, useRef, useState } from "react";
 import {Link, useSearchParams} from "react-router-dom"
 import { FaBars, FaTimes } from "react-icons/fa";
 import "../Style/navbar.css"
 import styled from "styled-components";
 import {BsHandbag} from "react-icons/bs"
+import {CgProfile} from "react-icons/cg"
 // import {BiSearch} from "react-icons/bi"
-import {IoPersonOutline} from "react-icons/io5"
+import {FiLogIn} from "react-icons/fi"
 import { Icon } from "@chakra-ui/react";
 import {SearchIcon} from "@chakra-ui/icons"
 
 import logo_final from "../Images/logo-new.png"
 // import { getProduct } from "../Api/action";
 import { useDispatch } from "react-redux";
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../Constraints/Type';
 // import styled from "styled-components";
  const Navbar = () =>{
 	{/* -------------------------------------------------------I added search here------------------------- */}
@@ -40,6 +54,7 @@ import { useDispatch } from "react-redux";
 		setNavClass(!navClass)		
 	};
 
+	const login = useSelector((state:RootState)=> state.AuthReducer.isAuth)
 	// const searchBar = useRef(null)
 
 
@@ -82,10 +97,25 @@ import { useDispatch } from "react-redux";
 					<Link to="/cart">
 					<Icon as={BsHandbag}/>
 					</Link>
-                    
-					<Link to="/login">
-                    <Icon as={IoPersonOutline}/>
+                    {
+						login ? <Menu>
+						{({ isOpen }) => (
+						  <>
+							<MenuButton isActive={isOpen} as={Button}   >
+							  {isOpen ? <Icon size={30} as={CgProfile} /> : <Icon as={CgProfile} size={30} />}
+							</MenuButton>
+							<MenuList>
+							  {/* <MenuItem>Profile</MenuItem> */}
+							  <MenuItem  onClick={() => alert('Kagebunshin')}>Log Out</MenuItem>
+							</MenuList>
+						  </>
+						)}
+					  </Menu> : <Link to="/login">
+                    <Icon as={FiLogIn}/>
 					</Link>
+						
+					}
+					
                 </div>
 			<button onClick={showNavbar}
 				className="nav-btn"
