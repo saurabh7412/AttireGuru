@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { styled } from "styled-components"
 // import { initialType } from "../Constraints/Type"
+import { LoginSuccess } from "../Redux/Login/action";
 import { RootState } from "../Constraints/Type"
 import {
     Flex,
@@ -17,23 +18,40 @@ import {
     
   } from '@chakra-ui/react';
 import { ToastContainer, toast } from 'react-toastify';
-
+import { useLocation } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
-import {Link, Navigate} from 'react-router-dom'
+import {Link, Navigate, useNavigate } from 'react-router-dom'
 import {useEffect, useState} from "react"
 import axios from "axios";
 const Login = ()=>{
-    const login = useSelector((state:RootState)=> state.AuthReducer)
-
+    const login = useSelector((state:RootState)=> state.AuthReducer.isAuth)
+    // console.log(login)
     const [email,setEmail] = useState<string>("")
     const [password,setPassword] = useState<string>("")
 
+
+    const location = useLocation()
+    console.log(location.state, login);
+
+    // console.log(auth);
+  const navigate = useNavigate()
+    if(login ){
+      toast.success("already logged in")
+        if(location.state === "/login" || location.state === null ){
+          // return <Navigate to={"/"} />
+          navigate("/")
+        }
+        else{
+          navigate(location.state)
+                  // return <Navigate replace={true} to={location.state} />
+
+        }
+    }
     
-    console.log(login);
-    const dipatch = useDispatch()
+    const dispatch = useDispatch()
 
     type user={
-      username: string;
+      email: string;
       password: string;
     }
     
@@ -45,6 +63,7 @@ const Login = ()=>{
 
       axios.get("https://cluttered-stranger-backend.onrender.com/users").then((res)=> setUser(res.data)).catch((err)=>{
         console.log(err);
+
       })
     },[])
     console.log(users);
@@ -67,13 +86,14 @@ const Login = ()=>{
     else{
 
       users.forEach((el)=>{
-        if(el.username === email && el.password === password){
+        if(el.email === email && el.password === password){
           check = true
         }
         
       })
       if(check){
         toast.success("✔ Login Seccussfully");
+        dispatch(LoginSuccess())
       }
       else{
         toast.warn('Please Check Credentials !', {
