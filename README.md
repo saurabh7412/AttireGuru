@@ -26,11 +26,11 @@ Cloned-Website: https://attire-guru.netlify.app/
 ![Screenshot 2023-06-19 002052](https://github.com/saurabh7412/cluttered-stranger-7385/assets/121215502/c3bb224c-a04e-45bf-9d40-bd303cb53347)
 
 
-This is an E-Commerce website which speciaizes in selling fashion products for men, women, and kids. The website provides 16,000 products of different types of products like shoes, jeans, shirts, kurtas, etc.
+This E-Commerce website specializes in selling fashion products for men, women, and kids. The website provides 16,000 products of different products like shoes, jeans, shirts, kurtas, etc.
 
-In this project We have tried to manipulate dom elements using REACT with TYPESCRIPT, managing state changes using REDUX, CHAKRA UI Library, styling using css in react, REACT TOASTIFY, styled components and tried to make responsive website and implement dynamic routing to persist data. With the self learning efforts and the technology stack, that we have learned till Unit-5 in the Masai School, we were able to clone the whole website with same looks & features.
+In this project, We have tried to manipulate dom elements using REACT with TYPESCRIPT, manage state changes using REDUX, CHAKRA UI Library, style using CSS in react, REACT TOASTIFY, styled-components and tried to make a responsive website and implement dynamic routing to persist data. With the self-learning efforts and the technology stack, that we have learned till Unit-5 in the Masai School, we were able to clone the whole website with the same looks & features.
 
-This is a collaborative Project built within 5 days by the team of 3 members 
+This is a collaborative project built within 5 days by a team of 3 members 
 
 -->  Saurabh Bhatt ( Team Lead ) --> Admin Side
 -->  Vishal Giri --> Product Page, Single Product Page, Add to Cart
@@ -52,11 +52,11 @@ This is a collaborative Project built within 5 days by the team of 3 members
 * CSS
 * JavaScript
 
-For storing user data we also used localStorage , JSON-Server, REDUX.
+For storing user data we also used JSON-Server & REDUX Store.
 
 ## How to run the Project
-* Open pages directory.
-* Clone this repo and run using live server command 'npm run start'.
+* Open the pages directory.
+* Clone this repo and run using the live server command 'npm run start'.
 
 ## End Notes 📑
-In this project we have tried to achieve a near to perfect clone of the original website images provided as much as possible. This entire journey of this construct week has given us experiences and we have learned lots of things by applying to the real website and it gave us  lot of confidence. Most of the features are added and functionality of the website is achieved.
+In this project, we have tried to achieve a near-to-perfect clone of the original website images provided as much as possible. This entire journey of this construct week has given us experiences and we have learned lots of things by applying to the actual website and it gave us a lot of confidence. Most of the features are added and the functionality of the website is achieved.
