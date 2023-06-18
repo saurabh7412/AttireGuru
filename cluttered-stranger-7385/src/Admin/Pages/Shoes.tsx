@@ -7,11 +7,16 @@ import { ChevronRightIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+
+import halt from "../Images/unrecognized.jpg";
+
 const Shoes = () => {
   const [category, setCat] = useState([]);
 
   
   const searchquery = useSelector((store: any)=>store.reducer.search)
+  
+  const isAuth = useSelector((store: any) => store.AuthReducer.isAuth);
 
   const handleDelete = (id: any) => {
     deleteProduct(id).then(() => {
@@ -44,6 +49,9 @@ useEffect(()=>{
 
   return (
     <>
+
+    { isAuth && <div>
+
       <MAINDIV>
         <Breadcrumb
           spacing="8px"
@@ -67,8 +75,12 @@ useEffect(()=>{
       <DIV>
         {category?.map((el, i) => (
           <ProductCard el={el} key={i} handleDelete={handleDelete} />
-        ))}
+          ))}
       </DIV>
+          </div>}
+
+          
+      <DIV>{!isAuth && <img id="halt" src={halt} />}</DIV>
     </>
   );
 };
@@ -102,4 +114,11 @@ const DIV = styled.div`
   gap: 30px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+
+  #halt{
+    text-align: center;
+    margin-left: 35%;
+    margin-top: 150px;
+    scale: 1.2;
+  }
 `;

@@ -30,6 +30,7 @@ export interface SearchAction {
 
 export interface AuthAction {
     type: string;
+    payload: string
 }
 
 

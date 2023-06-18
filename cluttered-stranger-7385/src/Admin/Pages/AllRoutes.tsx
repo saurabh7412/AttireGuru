@@ -15,6 +15,7 @@ import Users from './Users';
 import Orders from './Orders';
 import EditProduct from '../Components/EditProduct';
 import AddProduct from './AddProduct';
+import PrivateRoute from './PrivateRoute';
 
 const AllRoutes = () => {
   return (
@@ -22,18 +23,18 @@ const AllRoutes = () => {
         <Routes>
             <Route path='/Login' element={<Login/>}/>
             <Route path='/edit/:id' element={<EditProduct/>}/>
-            <Route path='/Users' element={<Users/>}/>
-            <Route path='/Orders' element={<Orders/>}/>
-            <Route path='/Dashboard' element={<DashBoard/>}/>
-            <Route path='/AllProducts' element={<AllProducts/>}/>
-            <Route path='/Shirts' element={<Shirts/>}/>
-            <Route path='/Kurtas' element={<Kurtas/>}/>
-            <Route path='/Dress-Material' element={<DressMaterial/>}/>
-            <Route path='/Sarees' element={<Sarees/>}/>
-            <Route path='/Jeans' element={<Jeans/>}/>
-            <Route path='/Shoes' element={<Shoes/>}/>
-            <Route path='/Sandals' element={<Sandals/>}/>
-            <Route path='/AddProduct' element={<AddProduct/>}/>
+            <Route path='/Users' element={<PrivateRoute><Users/></PrivateRoute>}/>
+            <Route path='/Orders' element={<PrivateRoute><Orders/></PrivateRoute>}/>
+            <Route path='/Dashboard' element={<PrivateRoute><DashBoard/></PrivateRoute>}/>
+            <Route path='/AllProducts' element={<PrivateRoute><AllProducts/></PrivateRoute>}/>
+            <Route path='/Shirts' element={<PrivateRoute><Shirts/></PrivateRoute>}/>
+            <Route path='/Kurtas' element={<PrivateRoute><Kurtas/></PrivateRoute>}/>
+            <Route path='/Dress-Material' element={<PrivateRoute><DressMaterial/></PrivateRoute>}/>
+            <Route path='/Sarees' element={<PrivateRoute><Sarees/></PrivateRoute>}/>
+            <Route path='/Jeans' element={<PrivateRoute><Jeans/></PrivateRoute>}/>
+            <Route path='/Shoes' element={<PrivateRoute><Shoes/></PrivateRoute>}/>
+            <Route path='/Sandals' element={<PrivateRoute><Sandals/></PrivateRoute>}/>
+            <Route path='/AddProduct' element={<PrivateRoute><AddProduct/></PrivateRoute>}/>
 
 
 

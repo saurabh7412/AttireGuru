@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, useToast } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { addNewProduct } from "../Redux/action";
 import random from "../Images/random.jpg";
+import { useSelector } from "react-redux";
+import halt from "../Images/unrecognized.jpg"
 
 const initial = {
   title: "",
@@ -24,15 +26,11 @@ const initial = {
 const AddProduct = () => {
   const [singleProd, setNewData] = useState(initial);
 
+  const isAuth = useSelector((store: any) => store.AuthReducer.isAuth);
+
   const navigate = useNavigate();
 
-  // console.log(id);
-
-  // useEffect(() => {
-  //   getSingleProduct(id).then((res) => {
-  //     setSingleProd(res.data);
-  //   });
-  // }, []);
+  const toast = useToast()
 
   const handleChange = (
     e:
@@ -54,12 +52,21 @@ const AddProduct = () => {
 
       addNewProduct(singleProd).then((res) => {
         console.log(res.data);
-        alert(`Product Added Successfully !`)
+
+        toast({
+          title: `Product Added Successfully !`,
+          description: "One Product got added !",
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+        })
+
         navigate(`/AllProducts`)
       });
   };
   return (
     <>
+    {isAuth && <div>
       <MAINDIV>
         <Breadcrumb
           spacing="8px"
@@ -264,6 +271,9 @@ const AddProduct = () => {
           </button>
         </form>
       </DIV>
+
+      </div>}
+      <DIV>{!isAuth && <img id="halt" src={halt}/>}</DIV>
     </>
   );
 };
@@ -295,6 +305,13 @@ const DIV = styled.div`
   display: flex;
   margin-bottom: 50px;
   align-items:center;
+
+  #halt{
+    text-align: center;
+    margin-left: 35%;
+    margin-top: 150px;
+    scale: 1.2;
+  }
   
 
   #updatebtn {

@@ -99,5 +99,6 @@ const DIV = styled.div`
 
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 20px;
+    padding-bottom : 30px;
 
 `

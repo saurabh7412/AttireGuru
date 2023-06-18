@@ -6,10 +6,12 @@ import noti from "../Images/Icons/notification.png";
 import setting from "../Images/Icons/setting.png";
 import logout from "../Images/Icons/logout.png";
 import DropdownMenu from "./DropdownMenu";
-import pro from "../Images/profile pic.jpg";
-import { Link } from "react-router-dom";
+import saurabh from "../Images/profile pic.jpg";
+import murad from "../Images/murad.png";
+import vishal from "../Images/vishal.jpg";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel, useDisclosure } from "@chakra-ui/react";
 import AllProducts from "../Pages/AllProducts";
 import DashBoard from "../Pages/DashBoard";
 import { querySearch } from "../Redux/action";
@@ -20,28 +22,26 @@ const NavBar = () => {
   
   const [search ,setSearch] = useState('');
   const isAuth = useSelector((store: any)=>store.AuthReducer.isAuth)
-
-
+  const username = useSelector((store: any)=>store.AuthReducer.username)
   
   const dispatch = useDispatch()
-  
 
-  // console.log(search);
+  const navigate = useNavigate();
+
+  
   const handleSearch =(e:React.ChangeEvent<HTMLInputElement> )=>{
     setSearch(e.target.value)
-    
     dispatch({type: SEARCH_PRODUCT, payload: e.target.value})
   }
 
   const handleLogOut =()=>{
     console.log("hi");
     dispatch({type: LOGOUT})
+    localStorage.clear();
     
   }
   const handleLogin =()=>{
-    console.log("hi");
-    dispatch({type: LOGIN})
-    
+    navigate(`/Login`)
   }
   
   
@@ -70,10 +70,10 @@ const NavBar = () => {
                 <div className="dropdown" style={{ float: "right" }}>
                   <button className="dropbtn">
                     <img
-                      src={pro}
+                      src={username === "saurabh"? saurabh : username === 'vishal'? vishal : username === 'murad'? murad : 'Username'}
                       style={{ width: "22%", borderRadius: "50%" }}
                     />{" "}
-                    Username
+                    {username === "saurabh" ? "SB" : username === "vishal" ? "VG": username === "murad"? "MK": "username"}
                   </button>
                   <div className="dropdown-content">
                     <a href="#">

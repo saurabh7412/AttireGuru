@@ -40,3 +40,16 @@ export const addNewProduct = async(newData: any)=>{
 export const querySearch = async(query: string)=>{
     return await axios.get(`${url}?q=${query}`)
 }
+
+
+export const reqLogin = async()=>{
+    return await axios.get(`https://cluttered-stranger-backend.onrender.com/admins`)
+}
+
+export const reqUsers = async()=>{
+    return await axios.get(`https://cluttered-stranger-backend.onrender.com/users`)
+}
+
+export const reqOrders = async()=>{
+    return await axios.get(`https://cluttered-stranger-backend.onrender.com/orders`)
+}
