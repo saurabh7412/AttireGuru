@@ -1,37 +1,23 @@
 
 
 import React from 'react'
-import { AllProduct, Product, ProductAction } from '../Types'
-import { GET_PRODUCT } from './actionType';
+import { AllProduct, Product, SearchAction, SearchType } from '../Types'
+import { GET_PRODUCT, SEARCH_PRODUCT } from './actionType';
 
 
 
-const initialState: AllProduct = {
-    allproducts: [
-        {
-            "title": "",
-            "description": "",
-            "price": 0,
-            "color": "",
-            "gender": "",
-            "category": "",
-            "image": "",
-            "rating": 0, 
-            "sizes": ["S","M", "L", "XL"],
-            "brand": "",
-            "fabric": "",
-            "fit": "",
-            "pattern": ""
-          },   
-    ]
+const initialState: SearchType= {
+  search : ''
 }
 
-export const reducer =(state: Product[], action : ProductAction)=>{
+export const reducer =(state: SearchType=initialState , action : SearchAction)=>{
 const { type, payload } = action;
 
 switch(type){
 
-    case GET_PRODUCT: return {...state,allproducts: payload}
+    case SEARCH_PRODUCT:{
+      return {search: payload}
+    }
 
     default: return state
 }

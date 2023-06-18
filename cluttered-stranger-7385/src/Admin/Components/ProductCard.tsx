@@ -3,19 +3,26 @@ import { Productss } from '../Pages/AllProducts';
 import { styled } from 'styled-components';
 
 import {Link} from "react-router-dom"
+import { deleteProduct, getProduct } from '../Redux/action';
+import { Dispatch } from 'redux';
 
 
 
 
 interface Props {
-    el: Productss
+    el: Productss ;
+    handleDelete : (id: any)=>void
+    
 }
 
-const ProductCard = ({el}: Props) => {
+const ProductCard = ({el,handleDelete}: Props) => {
+
     
     
   return (
     <DIV>
+        <div id='maindiv'>
+
         <img src={el.image}/>
         <h2>{el.title}</h2>
         <div id='cat'>
@@ -31,7 +38,8 @@ const ProductCard = ({el}: Props) => {
         </div>
         <div id='edit'>
             <button id='button1'><Link to={`/edit/${el.id}`}>Edit</Link></button>
-            <button id='button2'>Delete</button>
+            <button id='button2' onClick={()=>handleDelete(el.id)}>Delete</button>
+        </div>
         </div>
     </DIV>
   )
@@ -40,6 +48,16 @@ const ProductCard = ({el}: Props) => {
 export default ProductCard
 
 const DIV = styled.div`
+    #maindiv:hover {
+        cursor: pointer;
+        #edit{
+            visibility: visible;  
+        }   
+    }
+
+    #edit{
+        visibility: hidden;
+    }
 
     #cat, #gender, #edit{
        width: 70%;
@@ -48,6 +66,8 @@ const DIV = styled.div`
        justify-content: space-between;
        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande","Lucida Sans", Arial, sans-serif;
     }
+
+
 
     #button1{
         border: 1px solid;
@@ -79,5 +99,6 @@ const DIV = styled.div`
 
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 20px;
+    padding-bottom : 30px;
 
 `
