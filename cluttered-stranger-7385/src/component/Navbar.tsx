@@ -9,9 +9,11 @@ import {
 	MenuDivider,
 	Button
   } from '@chakra-ui/react'
+  
+
 import {ChevronDownIcon} from "@chakra-ui/icons"
 import { useEffect, useRef, useState } from "react";
-import {Link, useSearchParams} from "react-router-dom"
+import {Link,useNavigate, useSearchParams} from "react-router-dom"
 import { FaBars, FaTimes } from "react-icons/fa";
 import "../Style/navbar.css"
 import styled from "styled-components";
@@ -27,6 +29,7 @@ import logo_final from "../Images/logo-new.png"
 import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux';
 import { RootState } from '../Constraints/Type';
+import { LoginFailure } from '../Redux/Login/action';
 // import styled from "styled-components";
  const Navbar = () =>{
 	{/* -------------------------------------------------------I added search here------------------------- */}
@@ -57,6 +60,10 @@ import { RootState } from '../Constraints/Type';
 	const login = useSelector((state:RootState)=> state.AuthReducer.isAuth)
 	// const searchBar = useRef(null)
 
+const dispatch = useDispatch()
+	const handleLogOut = () =>{
+		dispatch(LoginFailure())
+	}
 
 	// const showSearch = ()=>{
 	// 	searchBar.current.classList.toggle(
@@ -64,7 +71,8 @@ import { RootState } from '../Constraints/Type';
 	// 	);
 	// 	console.log('check');
 	// }
-
+	
+const navgite = useNavigate()
 	return <header>
 			
 			<Link to="/"> <img className="logo" alt="logo" src={logo_final} /> </Link>
@@ -100,20 +108,22 @@ import { RootState } from '../Constraints/Type';
                     {
 						login ? <Menu>
 						{({ isOpen }) => (
-						  <>
+						  <div>
 							<MenuButton isActive={isOpen} as={Button}   >
 							  {isOpen ? <Icon size={30} as={CgProfile} /> : <Icon as={CgProfile} size={30} />}
 							</MenuButton>
-							<MenuList>
-							  {/* <MenuItem>Profile</MenuItem> */}
-							  <MenuItem  onClick={() => alert('Kagebunshin')}>Log Out</MenuItem>
+							<MenuList style= {{display:"flex", flexDirection:"column"}}>
+							  <MenuItem color={"black"} onClick={()=> {
+								navgite("/admin")
+							  }}>Admin</MenuItem>
+							  <MenuItem color={"black"} onClick={handleLogOut}>Log Out</MenuItem>
 							</MenuList>
-						  </>
+						  </div>
 						)}
 					  </Menu> : <Link to="/login">
                     <Icon as={FiLogIn}/>
 					</Link>
-						
+
 					}
 					
                 </div>

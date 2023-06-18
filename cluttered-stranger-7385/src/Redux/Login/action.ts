@@ -9,8 +9,8 @@ export const LoginSuccess=()=>{
  
   return {type:LOGIN_SUCCESS}
 }
-export const LoginFailure=(payload:initialType)=>{
-  return {type:LOGIN_FAILURE,payload}
+export const LoginFailure=()=>{
+  return {type:LOGIN_FAILURE}
 }
 // export const AdminSuccess=(payload)=>{
 //   return {type:ADMIN_LOGIN_SUCCESS,payload}

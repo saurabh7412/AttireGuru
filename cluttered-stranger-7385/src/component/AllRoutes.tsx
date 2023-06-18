@@ -19,6 +19,8 @@ return <Routes>
 <Route path="/" element={<Home/>}/>
 <Route path="/login" element={<Login/>}/>
 <Route path="/product" element={<ProductPage/>}/>
+<Route path="/cart" element={<h1>CartPage</h1>}/>
+<Route path="/admin" element={<h1>AdminPage</h1>}/>
 
 <Route path="/product/:id" element={<SingleProduct/>}/>
 <Route path="/cart" element={<AddtocartPage/>}/>
