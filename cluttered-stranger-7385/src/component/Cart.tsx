@@ -1,18 +1,10 @@
 import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
-import { Iproduct } from '../Constraints/Type';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { Iproduct, RootState } from '../Constraints/Type';
+import { useSelector } from 'react-redux';
+import { Skeleton } from '@chakra-ui/react';
 
-const CartItemContainer = styled.div`
-  position: relative;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  width: 200px;
-  margin: 10px;
-  .button-class:hover{
-background:white;
-color:black;
-  }
-`;
 
 const ItemImage = styled.img`
   width: 100%;
@@ -26,8 +18,7 @@ const ItemTitle = styled.h4`
 
 const ItemPrice = styled.p`
   margin-bottom: 10px;
-  color:orange;
-
+  color: orange;
 `;
 
 const OfferText = styled.span`
@@ -35,88 +26,123 @@ const OfferText = styled.span`
   border-radius: 10px;
   top: 5px;
   left: 5px;
-  background-color: #fff;
+  color:gold;
+  background-color: #283593;
   padding: 5px;
   font-size: 10px;
   font-weight: bold;
 `;
 
-const ButtonContainer = styled.div<{ showButtons: boolean }>`
+
+const CartContainer = styled.div`
+  position: relative;
+  width: 200px;
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
- 
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-
-  
-`;
-
-const TransparentButton = styled.button`
-  background-color: transparent;
-  background-color: #fff;
-  border-radius: 10px;
-  border: none;
-  padding: 5px 10px;
-  margin-top: 10px;
-  font-size: 12px;
+  justify-content: center;
   cursor: pointer;
-  outline: none;
+  transition: box-shadow 0.3s ease-in-out;
 
   &:hover {
-    text-decoration: underline;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 `;
 
-const BlurBackground = styled.div<{ showButtons: boolean }>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  backdrop-filter: tranparent;
-  z-index: 999;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease-in-out;
+const ButtonContainer = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
 
-  ${props =>
-    props.showButtons &&
-    css`
-      opacity: 1;
-      pointer-events: auto;
-    `}
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+
+transition: opacity 0.5s ease-in-out;
 `;
 
-// interface CartItemProps {
-//   image: string;
-//   title: string;
-//   price: string;
-//   offer: string;
-// }
+const Button = styled.button`
+  border: none;
+  background-color: transparent;
+  padding: 5px 10px;
+  margin: 5px 5px;
+  font-size: 14px;
+  cursor: pointer;
+color :orange;
+border:1px solid orange;
+border-radius:10px;
+font-size:11px;
+  &:hover {
+    border:none;
+    border-radius:10px;
+    
+    background-color: white;
+    color:black;
+  }
+`;
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 
-export default function Cart ({ image, title, price, offer }:Iproduct) {
-  const [showButtons, setShowButtons] = useState(false);
+  ${CartContainer}:hover & {
+    opacity: 1;
+  }
+`;
 
+export default function Cart(props: Iproduct) {
+  const { image, title, price, offer, id }=props;
+    const [showButtons, setShowButtons] = useState(false);
+   
+    const handleMouseEnter = () => {
+      setShowButtons(true);
+    };
+  
+    const handleMouseLeave = () => {
+      setShowButtons(false);
+    };
+  
+    const handleAddToCart = () => {
+      const cartItem = props;
+      // cartItem.quantity=1;
+         const cartItems = JSON.parse(localStorage.getItem('AddedToCart') || '[]');
+         cartItems.push({...cartItem,quantity:1});
+         localStorage.setItem('AddedToCart', JSON.stringify(cartItems));
+         alert(`${cartItems.length+1} Item added to cart`);
+    };
+    
+   
   return (
-
-    <CartItemContainer
-      onMouseEnter={() => setShowButtons(true)}
-      onMouseLeave={() => setShowButtons(false)}
+    <CartContainer
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      <BlurBackground showButtons={showButtons} />
+       <Overlay />
       <ItemImage src={image} alt={title} />
-      <ItemTitle>{title}</ItemTitle>
-      <ItemPrice>{price}</ItemPrice>
-      <OfferText>{offer}</OfferText>
-      <ButtonContainer showButtons={showButtons} >
-        <TransparentButton className="button-class">Show Details</TransparentButton>
-        <TransparentButton>Add to Cart</TransparentButton>
-      </ButtonContainer>
-    </CartItemContainer>
+    <ItemTitle>{title}</ItemTitle>
+      <ItemPrice>${price}</ItemPrice>
+       <OfferText>{offer}</OfferText>
+      {showButtons && (
+        <ButtonContainer>
+          <Button onClick={handleAddToCart}>ADD TO CART</Button>
+          <Button as={Link} to={`/product/${id}`}>SEE DETAILS</Button>
+        </ButtonContainer>
+      )}
+    </CartContainer>
   );
-};
+}

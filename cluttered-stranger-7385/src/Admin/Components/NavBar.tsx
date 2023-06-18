@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import logo from "../Images/Icons/logo-new.png";
 import mail from "../Images/Icons/mail.png";
@@ -6,23 +6,54 @@ import noti from "../Images/Icons/notification.png";
 import setting from "../Images/Icons/setting.png";
 import logout from "../Images/Icons/logout.png";
 import DropdownMenu from "./DropdownMenu";
-import pro from "../Images/profile pic.jpg";
+import saurabh from "../Images/profile pic.jpg";
+import murad from "../Images/murad.png";
+import vishal from "../Images/vishal.jpg";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel, useDisclosure } from "@chakra-ui/react";
+import AllProducts from "../Pages/AllProducts";
+import DashBoard from "../Pages/DashBoard";
+import { querySearch } from "../Redux/action";
+import { useDispatch, useSelector } from "react-redux";
+import { LOGIN, LOGOUT, SEARCH_PRODUCT } from "../Redux/actionType";
 
 const NavBar = () => {
-  const [isAuth, setIsAuth] = useState(false);
-  // const user ={
-  //   name : "Saurabh",
-  //   image: pro
-  // }
+  
+  const [search ,setSearch] = useState('');
+  const isAuth = useSelector((store: any)=>store.AuthReducer.isAuth)
+  const username = useSelector((store: any)=>store.AuthReducer.username)
+  
+  const dispatch = useDispatch()
+
+  const navigate = useNavigate();
+
+  
+  const handleSearch =(e:React.ChangeEvent<HTMLInputElement> )=>{
+    setSearch(e.target.value)
+    dispatch({type: SEARCH_PRODUCT, payload: e.target.value})
+  }
+
+  const handleLogOut =()=>{
+    console.log("hi");
+    dispatch({type: LOGOUT})
+    localStorage.clear();
+    
+  }
+  const handleLogin =()=>{
+    navigate(`/Login`)
+  }
+  
+  
 
   return (
     <DIV>
       <div id="nav-1">
         <div id="nav-1-1">
-          <img src={logo} id="logo" />
-          <input placeholder="Search here" />
+          <Link to={"/Dashboard"} id="logo">
+            <img src={logo} />
+          </Link>
+          <input placeholder="Search here" value={search} onChange={handleSearch}/>
         </div>
 
         <div id="nav-1-2">
@@ -30,7 +61,7 @@ const NavBar = () => {
             <img src={mail} id="mail" />
             <img src={noti} id="not" />
 
-            {!isAuth && <button id="login-btn">Login</button>}
+            {!isAuth && <button id="login-btn" onClick={handleLogin}>Login</button>}
 
             {isAuth && (
               <div id="login-dropdown">
@@ -39,17 +70,17 @@ const NavBar = () => {
                 <div className="dropdown" style={{ float: "right" }}>
                   <button className="dropbtn">
                     <img
-                      src={pro}
+                      src={username === "saurabh"? saurabh : username === 'vishal'? vishal : username === 'murad'? murad : 'Username'}
                       style={{ width: "22%", borderRadius: "50%" }}
                     />{" "}
-                    Username
+                    {username === "saurabh" ? "SB" : username === "vishal" ? "VG": username === "murad"? "MK": "username"}
                   </button>
                   <div className="dropdown-content">
                     <a href="#">
                       <img src={setting} />
                       Setting
                     </a>
-                    <a href="#" onClick={() => console.log("hi")}>
+                    <a href="#" onClick={handleLogOut}>
                       <img src={logout} />
                       Log Out
                     </a>
@@ -62,38 +93,33 @@ const NavBar = () => {
       </div>
 
       <div id="nav-2">
-        <a>Dashboard</a>
-        {/* <a>All Products</a> */}
 
-        {/* <div className="dropdown" style={{ float: "right" }}>
-                  <button className="dropbtn">
-                    <img src={pro} style={{width:"22%",borderRadius:"50%"}}/> Username
-                  </button>
-                  <div className="dropdown-content">
-                    <a href="#"><img src={setting} />Setting</a>
-                    <a href="#"  onClick={()=>console.log("hi")}><img src={logout}/>Log Out</a>
-                  </div>
-                </div> */}
+        <div className="dropdown" style={{ float: "right" }}>
+          <button className="dropbtn">Products</button>
+          <div className="dropdown-content">
+            <Link to={"/AllProducts"}>AllProducts</Link>
+            <br />
+            <Link to={"/Shirts"}>Shirts</Link>
+            <br />
+            <Link to={"/Kurtas"}>Kurtas</Link>
+            <br />
+            <Link to={"/Dress-Material"}>Dress-Material</Link>
+            <br />
+            <Link to={"/Sarees"}>Sarees</Link>
+            <br />
+            <Link to={"/Jeans"}>Jeans</Link>
+            <br />
+            <Link to={"/Shoes"}>Shoes</Link>
+            <br />
+            <Link to={"/Sandals"}>Sandals</Link>
+            <br />
+          </div>
+        </div>
 
-        <Tabs variant="enclosed">
-          <TabList>
-            <Tab>One</Tab>
-            <Tab>Two</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <p>one!</p>
-            </TabPanel>
-            <TabPanel>
-              <p>two!</p>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-
-        <a></a>
-        <a>abc</a>
-        <a>abc</a>
-        <a>abc</a>
+        <Link to={"/Dashboard"} className="navlink">Dashboard</Link>
+        <Link to={"/AddProduct"} className="navlink">Add New Product</Link>
+        <Link to={"/Users"} className="navlink">Users</Link>
+        <Link to={"/Orders"} className="navlink">Orders</Link>
       </div>
     </DIV>
   );
@@ -105,11 +131,19 @@ const DIV = styled.div`
   background-color: #5c6bc0;
   padding: 2px;
 
+  .navlink: hover{
+    color: #283593;
+    scale: 1.2;
+    transition : 500ms;
+    padding : 0px 5px;
+  }
+
   #nav-2 {
     background-color: white;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    padding: 7px;
   }
 
   #login-btn {
