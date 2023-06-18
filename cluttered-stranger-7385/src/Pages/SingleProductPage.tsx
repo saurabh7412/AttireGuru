@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { Iproduct } from '../constrains/type';
+import { Iproduct } from '../Constraints/Type';
 import { getProducts } from '../Redux/ProductReducer/action';
 import { Dispatch } from 'redux';
 import { ToastContainer, toast } from 'react-toastify';

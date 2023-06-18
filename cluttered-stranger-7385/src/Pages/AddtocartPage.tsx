@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Iproduct } from '../constrains/type';
+import { Iproduct } from '../Constraints/Type';
 
 const CartContainer = styled.div`
   display: flex;

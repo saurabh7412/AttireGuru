@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { getProducts } from '../Redux/ProductReducer/action';
-import { Iproduct, MyObject, RootState } from '../constrains/type';
+import { Iproduct, MyObject, RootState } from '../Constraints/Type';
 import Cart from './Cart';
 import Pagination from './Pegination';
 import { Skeleton } from '@chakra-ui/react';
@@ -54,8 +54,8 @@ color:red;
 
 export default function ProductSection() {
   const dispatch: Dispatch<any> = useDispatch();
-  const productsData = useSelector((state: RootState) => state.product);
-  const totalPage = useSelector((state: RootState) => state.totalPage);
+  const productsData = useSelector((state: RootState) => state.ProductReducer.product);
+  const totalPage = useSelector((state: RootState) => state.ProductReducer.totalPage);
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
@@ -106,7 +106,7 @@ export default function ProductSection() {
       </SearchBar>
       
       <ProductSections>
-        {productsData.map((product: Iproduct) => (
+        {productsData?.map((product: Iproduct) => (
           <Cart key={product.id} offer="new arrival" {...product} />
         ))}
       </ProductSections>

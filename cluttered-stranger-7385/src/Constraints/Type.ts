@@ -28,6 +28,7 @@ export type initialType={
   sleeve?: string;
   pattern?: string;
   offer?:string;
+  quantity?: number;
  };
  export interface productState {
   isLoading: boolean,
@@ -53,5 +54,6 @@ export type initialType={
     _sort?: "price" | "";
     _order?: any ;
     q?:string;
+    id?: string;
   };
 }

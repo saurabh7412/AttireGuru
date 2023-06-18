@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Iproduct, RootState } from '../constrains/type';
+import { Iproduct, RootState } from '../Constraints/Type';
 import { useSelector } from 'react-redux';
 import { Skeleton } from '@chakra-ui/react';
 
