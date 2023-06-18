@@ -33,7 +33,11 @@ In this project, We have tried to manipulate dom elements using REACT with TYPES
 This is a collaborative project built within 5 days by a team of 3 members 
 
 -->  Saurabh Bhatt ( Team Lead ) --> Admin Side
+
+
 -->  Vishal Giri --> Product Page, Single Product Page, Add to Cart
+
+
 -->  Murad Kodalwad  --> Home Page, Login/SignUp, Payment Page
 
 
