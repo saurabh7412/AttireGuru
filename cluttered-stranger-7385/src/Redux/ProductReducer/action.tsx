@@ -29,13 +29,15 @@ interface ProductsRequestAction {
 
 
    export const getProducts = (obj: MyObject) =>{
+
+    
       return async (dispatch: Dispatch<productActions>): Promise<void> => {
         dispatch<ProductsRequestAction>({ type: PRODUCTS_REQUEST });
     
         try {
           const response = await axios.get('https://cluttered-stranger-backend.onrender.com/products',obj);
           const totalPages = Math.ceil(response.headers['x-total-count'] / 16);
-    console.log(response.data,totalPages)
+    console.log(response.data,totalPages,obj)
           dispatch<GetProductsSuccessAction>({
             type: GET_PRODUCTS_SUCCESS,
             payload: {

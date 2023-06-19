@@ -8,6 +8,7 @@ import { Iproduct, MyObject, RootState } from '../Constraints/Type';
 import Cart from './Cart';
 import Pagination from './Pegination';
 import { Skeleton } from '@chakra-ui/react';
+import { LoginSuccess } from '../Redux/Login/action';
 
 const ProductSections = styled.section`
   display: grid;
@@ -60,8 +61,18 @@ export default function ProductSection() {
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   //  const loading = useSelector((state: RootState) => state);
-  // console.log(loading.isLoading)
+
+  // const isAuth = localStorage.getItem("isAuth") || false;
+
+
+
+  // console.log(isAuth);
+  
+  // console.log(loading)
   useEffect(() => {
+
+  
+    
     const obj: MyObject = {
       params: {
         category: searchParams.getAll('category'),
@@ -69,14 +80,21 @@ export default function ProductSection() {
         color: searchParams.getAll('color'),
         _limit: 16,
         _page: page,
-        _sort: searchParams.get('order') === '' ? '' : 'price',
+        _sort: searchParams.get('order') && 'price',
         _order: searchParams.get('order'),
         q: searchQuery, // Add search query to the params
       },
     };
 
     dispatch(getProducts(obj));
-  }, [dispatch, searchParams, page, searchQuery]);
+
+    // dispatch(LoginSuccess())
+
+  
+    
+  }, [ searchParams, page, searchQuery]);
+
+
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,6 +108,8 @@ export default function ProductSection() {
 //  if(loading.isLoading){
 //   return ( <Skeleton height="20px" my="4" />)
 //  }
+
+
   return (
     <div>
       <SearchBar>

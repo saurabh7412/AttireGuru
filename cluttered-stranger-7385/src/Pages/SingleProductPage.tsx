@@ -24,6 +24,7 @@ const ProductContainer = styled.div`
   display: flex;
   gap: 20px;
   max-width: 100%;
+  margin:auto;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -33,9 +34,12 @@ const ProductContainer = styled.div`
 `;
 
 const ProductImage = styled.img`
-  width: 600px;
-  height: 100vh;
+  width: 110%;
+  padding:20px;
   object-fit: cover;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 20px;
+  margin-top:80px;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -45,12 +49,14 @@ const ProductImage = styled.img`
 `;
 
 const ProductInfo = styled.div`
-  flex-grow: 1;
   width:650px;
   margin-left:100px;
-  padding: 10px 20px;
+  padding: 10px 30px;
+  text-align: start;
+  margin-top:80px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  
   @media (max-width: 768px) {
-    
     
     margin-left:50px;
   }
@@ -123,7 +129,7 @@ export default function SingleProduct() {
   const param = useParams<any>();
   const {id}=param;
   console.log(id)
-  const products = useSelector((store: any) => store.product);
+  const products = useSelector((store: any) => store.ProductReducer.product);
   const dispatch: Dispatch<any> = useDispatch();
 
   useEffect(() => {
@@ -139,14 +145,24 @@ export default function SingleProduct() {
   }
 
   const handleAddToCart = () => {
-   const cartItem = product;
-   cartItem.quantity=1;
-      const cartItems = JSON.parse(localStorage.getItem('AddedToCart') || '[]');
-      cartItems.push({...cartItem,quantity:1});
-      localStorage.setItem('AddedToCart', JSON.stringify(cartItems));
-      // alert(`${cartItems.length+1} Item added to cart`);
-      toast.success(`${cartItems.length} Item added to cart`);
-    console.log(`Added ${product.title} to cart`);
+
+     const cartItem = product;
+    const cartItems = JSON.parse(localStorage.getItem('AddedToCart') || '[]');
+        const alreadyprasent= cartItems.find((item:Iproduct) => item.id === cartItem.id);
+        if(alreadyprasent){
+      toast.warn("Already present in the cart")
+        }else{
+          cartItems.push({...cartItem,quantity:1});
+          localStorage.setItem('AddedToCart', JSON.stringify(cartItems));
+          toast.success(`${cartItems.length} Item added to cart`);
+        }
+  //  cartItem.quantity=1;
+  //     const cartItems = JSON.parse(localStorage.getItem('AddedToCart') || '[]');
+  //     cartItems.push({...cartItem,quantity:1});
+  //     localStorage.setItem('AddedToCart', JSON.stringify(cartItems));
+  //     // alert(`${cartItems.length+1} Item added to cart`);
+  //     toast.success(`${cartItems.length} Item added to cart`);
+  //   console.log(`Added ${product.title} to cart`);
   };
   
 const RatingStars = ( {rating }:{rating:number}) => {
@@ -185,15 +201,18 @@ const RatingStars = ( {rating }:{rating:number}) => {
         <ProductInfo>
           <ProductName>{product.title}</ProductName>
           <ProductPrice>
-            Price: ${product.price}{' '}
+            Price:  ₹ {product.price}{' '}
             <span style={{ textDecoration: 'line-through' }}>
-              ${product.mrp}
+            ₹ {product.mrp}
             </span>
           </ProductPrice>
           <DiscountLabel>{"40% offer"}</DiscountLabel>
           <ProductDescription>{product.description}</ProductDescription>
+          <div style={{display:"flex", alignItems:"center", justifyContent:"space-between", width:"70%"}}>
+
           <label htmlFor="">rating:-</label>
          <RatingStars rating={product.rating}/>
+          </div>
          <label htmlFor="">Select Size:-</label> {renderSizeButtons()}
 
          <ToastContainer />

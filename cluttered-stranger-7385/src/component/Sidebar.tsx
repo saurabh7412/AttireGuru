@@ -6,8 +6,13 @@ interface SidebarProps {}
 
 const SidebarContainer = styled.div`
   width: 200px;
-  padding: 16px;
+  padding: 25px;
   background-color: #f2f2f2;
+  padding-right: 60px;
+  margin-right: 60px;
+  text-align: start;
+  border-radius : 20px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 `;
 
 const Title = styled.h3`
@@ -85,7 +90,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
  }
   return (
     <SidebarContainer>
-      <ClearAll onClick={handleClearAll}>Clear All</ClearAll>
+      <ClearAll onClick={handleClearAll}>CLEAR ALL</ClearAll>
       <Title>Filter By Gender</Title>
       <CheckboxContainer>
         <input

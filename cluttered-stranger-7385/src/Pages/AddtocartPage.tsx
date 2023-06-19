@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Iproduct } from '../Constraints/Type';
+import { useNavigate } from 'react-router-dom';
 
 const CartContainer = styled.div`
   display: flex;
@@ -102,9 +103,12 @@ const CartHeading = styled.h2`
 `;
 
 
+
 const AddtocartPage = () => {
   const storedCartItems = localStorage.getItem('AddedToCart');
   const [cartItems, setCartItems] = useState<Iproduct[]>(storedCartItems ? JSON.parse(storedCartItems) : []);
+
+  const navigate = useNavigate();
 
   const increaseItem = (itemId: string) => {
     const updatedItems = cartItems.map((item: Iproduct) => {
@@ -128,6 +132,8 @@ const AddtocartPage = () => {
     localStorage.setItem('AddedToCart', JSON.stringify(updatedItems));
   };
 
+  
+
   const removeItem = (itemId: string) => {
     const updatedItems = cartItems.filter((item: Iproduct) => item.id !== itemId);
     setCartItems(updatedItems);
@@ -144,6 +150,17 @@ const AddtocartPage = () => {
     return total;
   };
 
+  const handleBuy =()=>{
+    const obj ={
+      totalProduct: cartItems.length,
+      totalAmount : getTotalAmount()
+    }
+
+    localStorage.setItem("order",JSON.stringify(obj))
+
+    navigate(`/payment`)
+  }
+
   return (
     <CartContainer>
       <CartHeading>Your Cart</CartHeading>
@@ -159,7 +176,7 @@ const AddtocartPage = () => {
                 <h4>{item.title}</h4>
                 <h4>{item.description}</h4>
                 <h4>Color:{item.color}</h4>
-                <p>Price: ${item.price}</p>
+                <p>Price:  ₹ {item.price}</p>
               </CartInfo>
               <ButtonGroup>
                 <QuantityButton onClick={() => decreaseItem(item.id)}>-</QuantityButton>
@@ -170,8 +187,8 @@ const AddtocartPage = () => {
               
             </CartItem>
           ))}
-          <TotalAmount>Total Amount: ${getTotalAmount()}</TotalAmount>
-          <BuyNowButton>Buy Now</BuyNowButton>
+          <TotalAmount>Total Amount:  ₹ {getTotalAmount()}</TotalAmount>
+          <BuyNowButton onClick={handleBuy}>Buy Now</BuyNowButton>
         </>
       )}
     </CartContainer>

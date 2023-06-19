@@ -31,7 +31,7 @@ const Login = ()=>{
 
 
     const location = useLocation()
-    console.log(location.state, login);
+    console.log(location.state, login,location.pathname);
 
     // console.log(auth);
   const navigate = useNavigate()
@@ -93,6 +93,7 @@ const Login = ()=>{
       })
       if(check){
         toast.success("✔ Login Seccussfully");
+        localStorage.setItem("isAuth", JSON.stringify("true"))
         dispatch(LoginSuccess())
       }
       else{
