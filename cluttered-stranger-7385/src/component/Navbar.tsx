@@ -81,7 +81,7 @@ const navgite = useNavigate()
 			<div className= {"secNav"} >
 			{/* ref={navRef} */}
 			<nav className= {navClass ? "responsive_nav" : "false"} >
-				<Link  to="/about" >ABOUT</Link>
+				<Link  to="/aboutus" >ABOUT</Link>
                 <div className="blackDot"></div>
 				<Link  to="/men" className="about section" >MEN</Link>
                 <div className="blackDot"></div>
@@ -94,7 +94,7 @@ const navgite = useNavigate()
 					className="nav-btn nav-close-btn" onClick={showNavbar}
 					>
 						{/* onClick={showNavbar} */}
-					<Icon as={FaTimes} />
+					<Icon as={FaTimes }  color={"white"}/>
 				</button>
 				{/* -------------------------------------------------------I added search here------------------------- */}
 				
@@ -103,7 +103,7 @@ const navgite = useNavigate()
 				{/* <input className="beforeSearch" ref={searchBar} type="text" placeholder="Search"  onChange={(e)=>setSearchText(e.target.value)}/> */}
                     {/* <SearchIcon onClick={showSearch}/> */}
 					<Link to="/cart">
-					<Icon as={BsHandbag}/>
+					<Icon as={BsHandbag} color={"white"}/>
 					</Link>
                     {
 						login ? <Menu>
@@ -114,14 +114,15 @@ const navgite = useNavigate()
 							</MenuButton>
 							<MenuList style= {{display:"flex", flexDirection:"column"}}>
 							  <MenuItem color={"black"} onClick={()=> {
-								navgite("/admin")
+								// navgite("https://playful-tiramisu-3e651f.netlify.app/Login")
+								window.open(`https://playful-tiramisu-3e651f.netlify.app/Login`,"_self")
 							  }}>Admin</MenuItem>
 							  <MenuItem color={"black"} onClick={handleLogOut}>Log Out</MenuItem>
 							</MenuList>
 						  </div>
 						)}
 					  </Menu> : <Link to="/login">
-                    <Icon as={FiLogIn}/>
+                    <Icon as={FiLogIn} color={"white"}/>
 					</Link>
 
 					}

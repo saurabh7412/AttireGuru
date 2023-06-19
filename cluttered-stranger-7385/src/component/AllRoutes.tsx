@@ -10,6 +10,7 @@ import SingleProduct from "../Pages/SingleProductPage";
 
 import {Payment} from "../Pages/Payment";
 import { PriveteRoute } from "./PriveteRoute";
+import About from "./About";
 
 export default function AllRoutes(){
 
@@ -19,8 +20,9 @@ return <Routes>
 <Route path="/" element={<Home/>}/>
 <Route path="/login" element={<Login/>}/>
 <Route path="/product" element={<ProductPage/>}/>
-<Route path="/cart" element={<h1>CartPage</h1>}/>
 <Route path="/admin" element={<h1>AdminPage</h1>}/>
+<Route path="/aboutus" element={<About/>}/>
+
 
 <Route path="/product/:id" element={<SingleProduct/>}/>
 <Route path="/cart" element={<AddtocartPage/>}/>

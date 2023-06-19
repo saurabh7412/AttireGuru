@@ -24,11 +24,9 @@ export const AuthReducer=(state=intitalState,{type,payload}:{type:string; payloa
                 
             }
         }
-        
-
-        
+                
         default:{
-            return intitalState;
+            return state;
         }
     }
 }

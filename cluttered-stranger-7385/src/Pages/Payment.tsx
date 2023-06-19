@@ -24,7 +24,7 @@ export const Payment = () => {
 
   
     const navigate=useNavigate()
-    localStorage.setItem("order", JSON.stringify({totolAmount: 1000, totalProduct: 5}))
+    // localStorage.setItem("order", JSON.stringify({totolAmount: 1000, totalProduct: 5}))
 
     type infoType = {
       totalAmount: number,
@@ -50,14 +50,18 @@ export const Payment = () => {
         axios.post("https://cluttered-stranger-backend.onrender.com/orders",obj).then((res)=> console.log(res)).catch((err)=> console.log(err))
 
         setTimeout(()=>{
-          navigate("/shop")
+
+          
+          navigate("/");
+
         },4000)
     }
 
 
   const handleGetOtp = ()=>{
     let ans = Math.floor(Math.random()*9000)+1000;
-    alert(`Your OTP for Payment is :- ${ans}`)
+    toast.success(`Your OTP for Payment is :- ${ans}`)
+
   }
 
   return (
@@ -83,7 +87,7 @@ export const Payment = () => {
                     label="Name"
                     id="form4"
                     type="text"
-                    onChange={(e)=> setName(e.target.value)}
+                    onChange={(e: any)=> setName(e.target.value)}
                     // size="lg"
                     value={name}
                     style={{margin:"auto"}}
@@ -96,7 +100,7 @@ export const Payment = () => {
                     type="text"
                     // size="lg"
                     value={addres}
-                    onChange={(e)=> setAddress(e.target.value)}
+                    onChange={(e: any)=> setAddress(e.target.value)}
                     style={{margin:"auto"}}
                   />
                 </div>
@@ -110,7 +114,7 @@ export const Payment = () => {
                     // size="lg"
                     maxLength={10}
                     value={number}
-                    onChange={(e)=> setNumber(e.target.value)}
+                    onChange={(e: any)=> setNumber(e.target.value)}
                     style={{margin:"auto"}}
                   />
                 </div>

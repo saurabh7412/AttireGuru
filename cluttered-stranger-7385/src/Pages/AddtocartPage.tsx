@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Iproduct } from '../Constraints/Type';
+import { useNavigate } from 'react-router-dom';
 
 const CartContainer = styled.div`
   display: flex;
-  width:100%;
+  width:70%;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
-`;
-
+  margin:auto;
+  `;
+  
 const CartItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width:100%;
-  padding: 10px;
+  padding: 20px;
   margin-bottom: 10px;
-  
+  border-radius:20px;
   background-color: #f5f5f5;
+  margin-top: 30px;
 `;
 const EmptyCartImage = styled.img`
   margin-top: 20px;
@@ -26,14 +28,19 @@ const EmptyCartImage = styled.img`
 `;
 const CartImage = styled.img`
   width: 200px;
+  border-radius:20px;
   height: auto;
   object-fit: cover;
   margin-right: 10px;
 `;
 
 const CartInfo = styled.div`
-  flex-grow: 1;
+  
   margin-left: 100px;
+  h1{
+    font-weight:bold;
+    font-size:25px;
+  }
 
 `;
 
@@ -79,6 +86,7 @@ const RemoveButton = styled.button`
 const BuyNowButton = styled.button`
 width:100%;
   margin-top: 20px;
+  margin-bottom: 40px;
   padding: 10px 20px;
   background-color: #283593;
   color: white;
@@ -91,10 +99,16 @@ const CartHeading = styled.h2`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+  margin-top: 100px;
 `;
+
+
+
 const AddtocartPage = () => {
   const storedCartItems = localStorage.getItem('AddedToCart');
   const [cartItems, setCartItems] = useState<Iproduct[]>(storedCartItems ? JSON.parse(storedCartItems) : []);
+
+  const navigate = useNavigate();
 
   const increaseItem = (itemId: string) => {
     const updatedItems = cartItems.map((item: Iproduct) => {
@@ -118,6 +132,8 @@ const AddtocartPage = () => {
     localStorage.setItem('AddedToCart', JSON.stringify(updatedItems));
   };
 
+  
+
   const removeItem = (itemId: string) => {
     const updatedItems = cartItems.filter((item: Iproduct) => item.id !== itemId);
     setCartItems(updatedItems);
@@ -134,6 +150,17 @@ const AddtocartPage = () => {
     return total;
   };
 
+  const handleBuy =()=>{
+    const obj ={
+      totalProduct: cartItems.length,
+      totalAmount : getTotalAmount()
+    }
+
+    localStorage.setItem("order",JSON.stringify(obj))
+
+    navigate(`/payment`)
+  }
+
   return (
     <CartContainer>
       <CartHeading>Your Cart</CartHeading>
@@ -149,7 +176,7 @@ const AddtocartPage = () => {
                 <h4>{item.title}</h4>
                 <h4>{item.description}</h4>
                 <h4>Color:{item.color}</h4>
-                <p>Price: ${item.price}</p>
+                <p>Price:  ₹ {item.price}</p>
               </CartInfo>
               <ButtonGroup>
                 <QuantityButton onClick={() => decreaseItem(item.id)}>-</QuantityButton>
@@ -160,8 +187,8 @@ const AddtocartPage = () => {
               
             </CartItem>
           ))}
-          <TotalAmount>Total Amount: ${getTotalAmount()}</TotalAmount>
-          <BuyNowButton>Buy Now</BuyNowButton>
+          <TotalAmount>Total Amount:  ₹ {getTotalAmount()}</TotalAmount>
+          <BuyNowButton onClick={handleBuy}>Buy Now</BuyNowButton>
         </>
       )}
     </CartContainer>

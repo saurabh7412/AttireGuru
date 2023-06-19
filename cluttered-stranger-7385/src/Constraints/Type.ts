@@ -51,7 +51,7 @@ export type initialType={
     color?:string[];
     _limit?: number;
     _page?: number;
-    _sort?: "price" | "";
+    _sort?: null | string;
     _order?: any ;
     q?:string;
     id?: string;

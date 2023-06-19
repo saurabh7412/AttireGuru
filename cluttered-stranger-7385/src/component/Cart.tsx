@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Iproduct, RootState } from '../Constraints/Type';
 import { useSelector } from 'react-redux';
 import { Skeleton } from '@chakra-ui/react';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const ItemImage = styled.img`
@@ -119,11 +120,22 @@ export default function Cart(props: Iproduct) {
   
     const handleAddToCart = () => {
       const cartItem = props;
+
+      const cartItems = JSON.parse(localStorage.getItem('AddedToCart') || '[]');
+          const alreadyprasent= cartItems.find((item:Iproduct) => item.id === cartItem.id);
+          if(alreadyprasent){
+        toast.warn("Already present in the cart")
+          }else{
+            cartItems.push({...cartItem,quantity:1});
+            localStorage.setItem('AddedToCart', JSON.stringify(cartItems));
+            toast.success(`${cartItems.length} Item added to cart`);
+          }
       // cartItem.quantity=1;
-         const cartItems = JSON.parse(localStorage.getItem('AddedToCart') || '[]');
-         cartItems.push({...cartItem,quantity:1});
-         localStorage.setItem('AddedToCart', JSON.stringify(cartItems));
-         alert(`${cartItems.length+1} Item added to cart`);
+        //  const cartItems = JSON.parse(localStorage.getItem('AddedToCart') || '[]');
+        //  cartItems.push({...cartItem,quantity:1});
+        //  localStorage.setItem('AddedToCart', JSON.stringify(cartItems));
+        // //  alert(`${cartItems.length+1} Item added to cart`);
+        // toast.success(`${cartItems.length} Item added to cart`)
     };
     
    
@@ -133,9 +145,10 @@ export default function Cart(props: Iproduct) {
       onMouseLeave={handleMouseLeave}
     >
        <Overlay />
+       <ToastContainer/>
       <ItemImage src={image} alt={title} />
     <ItemTitle>{title}</ItemTitle>
-      <ItemPrice>${price}</ItemPrice>
+      <ItemPrice> ₹ {price}</ItemPrice>
        <OfferText>{offer}</OfferText>
       {showButtons && (
         <ButtonContainer>
