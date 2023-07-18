@@ -12,6 +12,13 @@ Original-Website-Images : https://dribbble.com/shots/20389012-Sopa-Marketplace-L
 
 Cloned-Website: https://attire-guru.netlify.app/
 
+HOW TO GO THROUGH THE PROJECT -
+- First, go to Login or signup ( for the first time ).
+- After login go to Admin Page.
+- Use the following credentials to log in as Admin
+   - Username -  Saurabh
+   - Password -  Saurabh123
+
 ## Landing Page
 
 ![Screenshot 2023-06-19 000548](https://github.com/saurabh7412/cluttered-stranger-7385/assets/121215502/2d630738-872d-4d61-a5a4-7f37ee31c839)
