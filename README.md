@@ -16,8 +16,8 @@ HOW TO GO THROUGH THE PROJECT -
 - First, go to Login or signup ( for the first time ).
 - After login go to Admin Page.
 - Use the following credentials to log in as Admin
-   - Username -  Saurabh
-   - Password -  Saurabh123
+   - Username -  saurabh
+   - Password -  saurabh123
 
 ## Landing Page
 
