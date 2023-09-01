@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components"
 import {
   MDBBtn,
   MDBCard,
@@ -21,6 +22,9 @@ export const Payment = () => {
   const [name,setName] = useState<string>("")
   const [addres,setAddress] = useState<string>("")
   const [number,setNumber] = useState<string>("")
+  const [card,setCard] = useState<string>("")
+  const [opt,setOtp] = useState<string>("")
+  const [inputOpt,setInputOTP] = useState<string>("")
 
   
     const navigate=useNavigate()
@@ -32,6 +36,13 @@ export const Payment = () => {
     }
 
     const paymentdone=()=>{
+
+      if(name == "" || card=="" || number == "" || addres == "" ){
+        toast.info("Please Fill All The Details")
+
+      }
+      else if(opt === inputOpt && inputOpt !== ""){
+        
         toast.success("order successful")
         const info = (localStorage.getItem("order"))
         
@@ -46,29 +57,33 @@ export const Payment = () => {
           mobile: number,
         }
         console.log(obj,data);
-
+        
         axios.post("https://cluttered-stranger-backend.onrender.com/orders",obj).then((res)=> console.log(res)).catch((err)=> console.log(err))
-
+        
         setTimeout(()=>{
-
+          
           
           navigate("/");
-
+          
         },4000)
+      }
+      else{
+        toast.info("Please enter correct OTP")
+      }
     }
 
 
   const handleGetOtp = ()=>{
     let ans = Math.floor(Math.random()*9000)+1000;
     toast.success(`Your OTP for Payment is :- ${ans}`)
-
+    setOtp(ans+"")
   }
 
   return (
-    <div style= {{paddingTop:"40px"}}>
+    <DIV >
     <MDBContainer
       className="py-5"
-      fluid
+      // fluid
       
     >
       <ToastContainer/>
@@ -76,46 +91,49 @@ export const Payment = () => {
       <MDBRow className=" d-flex justify-content-center">
         <MDBCol md="10" lg="8" xl="5">
           <MDBCard className="rounded-3">
-            <MDBCardBody className="p-4">
+            <MDBCardBody  className="p-4 " style={{display:"flex", flexDirection:"column", gap:"10px" }}>
               <div className="text-center mb-4">
                 <h3>Enter Your Details</h3>
                 {/* <h6>Payment</h6> */}
                
               </div>
-              <div style={{width:"fit-content", margin:"auto"}} >
+              <div  className="flex-fill mx-3" >
+                {/* <label htmlFor="">Name</label> */}
                   <MDBInput
-                    label="Name"
+                    // label="Name"
                     id="form4"
                     type="text"
                     onChange={(e: any)=> setName(e.target.value)}
-                    // size="lg"
+                    size="lg"
+                    placeholder="Name"
                     value={name}
-                    style={{margin:"auto"}}
+                    // width={"100px"}
+                    style={{width:"100%"}}
                   />
                 </div>
-                <div style={{width:"fit-content", margin:"auto"}} >
+                <div   className="flex-fill mx-3" >
                   <MDBInput
-                    label="Address"
+                    placeholder="Address"
                     id="form4"
                     type="text"
-                    // size="lg"
+                    size="lg"
                     value={addres}
                     onChange={(e: any)=> setAddress(e.target.value)}
-                    style={{margin:"auto"}}
+                    // style={{margin:"auto"}}
                   />
                 </div>
-                <div style={{width:"fit-content", margin:"auto"}} >
+                <div   className="flex-fill mx-3"  >
                   <MDBInput
-                    label="Mobile Number"
+                    placeholder="Mobile Number"
                     id="form4"
                     type="text"
                     // placeholder="Number"
                     width={"150px"}
-                    // size="lg"
+                    size="lg"
                     maxLength={10}
                     value={number}
                     onChange={(e: any)=> setNumber(e.target.value)}
-                    style={{margin:"auto"}}
+                    // style={{margin:"auto"}}
                   />
                 </div>
               
@@ -125,43 +143,46 @@ export const Payment = () => {
               
               <p style={{color:"blue",fontSize:"20px"}}>Enter Your Card Number</p>
               <MDBRow className="my-4">
-              <div className="d-flex flex-row align-items-center mb-4 pb-1">
+              <div className="cardDiv">
                 
                 <img
                   className="img-fluid"
                   src="https://img.icons8.com/color/48/000000/mastercard-logo.png"
                 />
                 <div className="flex-fill mx-3">
-                  <div style={{marginTop:"20px"}} className="form-outline">
+                  
                     <MDBInput
-                      label="Card Number"
+                      placeholder="Card Number"
                       id="form1"
                       type="number"
                       size="lg"
-
-                      maxLength={16}
+                      onChange={(e:any)=> setCard(e.target.value)}
+                      value={card}
+                      // maxLength={12}
                     //   value="** ** ** 3193"
+                  maxLength={3}
                     />
-                  </div>
+                  
                 </div>
                 {/* <a href="#!">Remove card</a> */}
               </div>
-                <MDBCol style={{width:"80%", display:"flex", justifyContent:"space-around", paddingLeft:"35px", margin:"auto" }} >
+                <MDBCol style={{width:"80%", display:"flex", justifyContent:"space-around", margin:"auto" }} >
                 <MDBCol size="2">
                   <MDBInput
-                    label="CVV"
+                    placeholder="CVV"
                     id="form6"
                     type="password"
-                    // size=""
+                    size="lg"
                     maxLength={3}
-                    placeholder="CVV"
+                    
+                    // placeholder="CVV"
                   />
                 </MDBCol>
                   <MDBInput
-                    label="Expire"
+                    // label="Expire"
                     id="form5"
                     type="password"
-                    // size="lg"
+                    size="lg"
                     maxLength={6}
                     placeholder="MM/YYYY"
                   />
@@ -171,15 +192,16 @@ export const Payment = () => {
       <p>Click Here To ? <span style={{color:"blue"}}> <button onClick={handleGetOtp}><u>Get OTP</u></button></span> </p>
       <MDBCol style={{width:"fit-content", margin:"auto"}} size="4">
                   <MDBInput
-                    label="Enter OTP"
+                    // label="Enter OTP"
                     id="form6"
-                    type="password"
-                    size="lg"
+                    type="number"
+                    size="sm"
+                    onChange={ (e : any )=> setInputOTP(e.target.value)}
                     placeholder="Enter Your OTP"
                   />
                 </MDBCol>
                 <div style={{marginBottom: "20px"}}></div>
-              <Button bg={"gree"}  
+              <Button bg={"green.400" } fontSize={"lg"}  
               onClick={paymentdone}
               >
                Click to Proceed 
@@ -190,8 +212,36 @@ export const Payment = () => {
         </MDBCol>
       </MDBRow>
     </MDBContainer>
-    </div>
+    </DIV>
   );
 }
+
+const DIV = styled.div`
+  /* style= {{paddingTop:"40px"}}style= {{paddingTop:"40px"}} */
+  padding-top: 40px;
+
+  .inputDiv{
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    /* width: 100%; */
+    margin-top: 10px;
+  }
+  .inputDiv > input{
+    width: 100%;
+  }
+  .cardDiv{
+    display: flex;
+    margin: 10px auto;
+    width: 90%;
+    /* padding: 0 0 0 10px; */
+  }
+  /* .cardDiv > img{
+    margin-top: 10px;
+  } */
+
+
+
+`
 
 // export  default Payment

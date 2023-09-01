@@ -1,3 +1,4 @@
+import { Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
@@ -6,13 +7,18 @@ interface SidebarProps {}
 
 const SidebarContainer = styled.div`
   width: 200px;
-  padding: 25px;
-  background-color: #f2f2f2;
+  padding: 30px;
+  /* background-color: #f2f2f2; */
   padding-right: 60px;
   margin-right: 60px;
   text-align: start;
+  height: fit-content;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   border-radius : 20px;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  .clearBtn{
+    margin: 10px auto;
+  }
 `;
 
 const Title = styled.h3`
@@ -23,16 +29,15 @@ const Title = styled.h3`
 const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
-  curser:pointer;
+  margin-bottom: 5px;
+  /* curser:pointer; */
+  cursor: pointer;
+
   label {
     margin-left: 8px;
   }
 `;
-const ClearAll = styled.span`
-  color: red;
-  cursor: pointer;
-`;
+
 const Sidebar: React.FC<SidebarProps> = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const initialCat = searchParams.getAll("category");
@@ -90,7 +95,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
  }
   return (
     <SidebarContainer>
-      <ClearAll onClick={handleClearAll}>CLEAR ALL</ClearAll>
+      <Button className="clearBtn" onClick={handleClearAll}>CLEAR ALL</Button>
       <Title>Filter By Gender</Title>
       <CheckboxContainer>
         <input

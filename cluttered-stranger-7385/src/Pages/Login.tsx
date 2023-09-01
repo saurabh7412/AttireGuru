@@ -20,10 +20,10 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import { useLocation } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
-import {Link, Navigate, useNavigate } from 'react-router-dom'
+import {Link, useNavigate } from 'react-router-dom'
 import {useEffect, useState} from "react"
 import axios from "axios";
-const Login = ()=>{
+const Login = ()=> {
     const login = useSelector((state:RootState)=> state.AuthReducer.isAuth)
     // console.log(login)
     const [email,setEmail] = useState<string>("")
@@ -187,6 +187,9 @@ export default Login;
 const DIV = styled.div`
 /* margin-top: 100px; */
 padding: 100px;
+@media all and (max-width : 600px ){
+  padding: 50px;
+}
 
 `
 

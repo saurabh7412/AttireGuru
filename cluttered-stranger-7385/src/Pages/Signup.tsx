@@ -15,6 +15,8 @@ import {
  } from "@chakra-ui/react";
  import { useReducer, useState } from "react";
  import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+ import { styled } from "styled-components"
+
  import { Link, useNavigate } from "react-router-dom";
  import axios from "axios";
  import { ToastContainer, toast } from "react-toastify";
@@ -62,13 +64,16 @@ import {
     };
 
     return (
+      <DIV>
+
+    
        <Flex
-          padding={"50px 10px"}
+         
           border-radius={"5px"}
           minH={"100vh"}
           align={"center"}
           justify={"center"}
-          width={"70%"}
+         //  width={"70%"}
           margin={"auto"}
           box-shadow={
              "rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset"
@@ -195,5 +200,13 @@ import {
              </Box>
           </Stack>
        </Flex>
+       </DIV>
     );
  }
+
+ const DIV = styled.div`
+   padding: 100px;
+@media all and (max-width : 600px ){
+  padding: 40px;
+}
+ `
