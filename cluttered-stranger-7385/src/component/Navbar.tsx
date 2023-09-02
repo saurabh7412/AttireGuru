@@ -31,7 +31,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../Constraints/Type';
 import { LoginFailure } from '../Redux/Login/action';
 // import styled from "styled-components";
- const Navbar = () =>{
+ const Navbar = () => {
 	{/* -------------------------------------------------------I added search here------------------------- */}
 	// const dispatch = useDispatch()
 	// const [searchParams,setSearchParams] = useSearchParams();
@@ -75,7 +75,7 @@ const dispatch = useDispatch()
 const navgite = useNavigate()
 	return <header>
 			
-			<Link to="/"> <img className="logo" alt="logo" src={logo_final} /> </Link>
+			<Link to="/" > <img className="logo" alt="logo" src={logo_final} /> </Link>
 
 
 			<div className= {"secNav"} >

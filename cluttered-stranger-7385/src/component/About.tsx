@@ -1,6 +1,33 @@
 import React from "react";
+import { useEffect } from "react";
 
 const About = () => {
+  const handler = (event: any) => {
+    // changing the state to the name of the key
+  // which is pressed
+  console.log(event.key);
+  // setState(event.key);
+};
+
+useEffect(() => {
+  const keyDownHandler = (event : any) => {
+    console.log('User pressed: ', event.key);
+
+    if (event.key === 'Enter') {
+      event.preventDefault();
+
+      // 👇️ your logic here
+      console.log(event);
+    }
+  };
+
+  document.addEventListener('keydown', keyDownHandler);
+
+  // return () => {
+  //   document.removeEventListener('keydown', keyDownHandler);
+  // };
+}, []);
+
   return (
     <div>
       <h1>About Us</h1>
@@ -32,7 +59,10 @@ const About = () => {
         the Year: Non–Store Retail' for 2012 by Images Group Awarded 'Best
         E-commerce Partner of the year 2011-12' by Puma India
       </p>
-    </div>
+
+<input type="text" onKeyDown={(e) => handler(e)} />
+
+</div>
   );
 };
 
