@@ -59,7 +59,7 @@ export const Payment = () => {
         console.log(obj,data);
         
         axios.post("https://cluttered-stranger-backend.onrender.com/orders",obj).then((res)=> console.log(res)).catch((err)=> console.log(err))
-        
+        localStorage.removeItem("AddedToCart")
         setTimeout(()=>{
           
           
