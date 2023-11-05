@@ -10,7 +10,7 @@ Project: Make a website with provided reference website images.
 
 Original-Website-Images : https://dribbble.com/shots/20389012-Sopa-Marketplace-Landing-Page
 
-Cloned-Website: https://attire-guru.netlify.app/
+Cloned-Website: https://attire-guru.vercel.app/
 
 HOW TO GO THROUGH THE PROJECT -
 - First, go to Login or signup ( for the first time ).
