@@ -14,8 +14,8 @@ Cloned-Website: https://attire-guru.netlify.app/
 
 HOW TO GO THROUGH THE PROJECT -
 - First, go to Login or signup ( for the first time ).
-- After login go to Admin Page.
-- Use the following credentials to log in as Admin
+- After login go to Shop Page.
+- On Login page, use the following credentials to log in as Admin
    - Username -  saurabh
    - Password -  saurabh123
 
